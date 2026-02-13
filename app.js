@@ -819,6 +819,11 @@ function initApp() {
     updateFavoritesCount();
     initializeLanguage();
     
+    // إعداد شريط التنقل للجوال
+    setupMobileNavigation();
+    updateMobileFavoritesCount();
+    updateMobileCartCount();
+    
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
@@ -1431,6 +1436,9 @@ function updateCartItemQuantity(productId, newQuantity) {
 function updateCartCount() {
     const totalItems = appState.cart.reduce((sum, item) => sum + item.quantity, 0);
     domElements.cartCount.textContent = totalItems;
+    
+    // تحديث عداد السلة في الجوال
+    updateMobileCartCount();
 }
 
 function toggleFavorite(product) {
@@ -1458,6 +1466,9 @@ function toggleFavorite(product) {
 
 function updateFavoritesCount() {
     domElements.favoritesCount.textContent = appState.favorites.length;
+    
+    // تحديث عداد المفضلة في الجوال
+    updateMobileFavoritesCount();
 }
 
 function openCartModal() {
@@ -1834,6 +1845,82 @@ async function handleRegister(e) {
     } finally {
         showLoading(false);
     }
+}
+
+// ============================================
+// 📱 دوال شريط التنقل السفلي للجوال
+// ============================================
+
+// تحديث عداد المفضلة في الجوال
+function updateMobileFavoritesCount() {
+    const mobileFavCount = document.getElementById('mobileFavoritesCount');
+    if (mobileFavCount) {
+        const count = appState.favorites.length;
+        mobileFavCount.textContent = count;
+        mobileFavCount.style.display = count > 0 ? 'flex' : 'none';
+    }
+}
+
+// تحديث عداد السلة في الجوال
+function updateMobileCartCount() {
+    const mobileCartCount = document.getElementById('mobileCartCount');
+    if (mobileCartCount) {
+        const totalItems = appState.cart.reduce((sum, item) => sum + item.quantity, 0);
+        mobileCartCount.textContent = totalItems;
+        mobileCartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+    }
+}
+
+// إعداد أحداث شريط التنقل السفلي
+function setupMobileNavigation() {
+    // زر الحساب في الجوال
+    const mobileUserBtn = document.getElementById('mobileUserBtn');
+    if (mobileUserBtn) {
+        mobileUserBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (appState.currentUser) {
+                // إذا كان المستخدم مسجل دخوله، نفتح القائمة
+                domElements.userDropdown.classList.toggle('active');
+            } else {
+                // إذا لم يكن مسجل، نفتح نافذة التسجيل
+                openAuthModal();
+            }
+        });
+    }
+    
+    // زر السلة في الجوال
+    const mobileCartBtn = document.getElementById('mobileCartBtn');
+    if (mobileCartBtn) {
+        mobileCartBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openCartModal();
+        });
+    }
+    
+    // روابط التنقل
+    document.querySelectorAll('.bottom-nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // تحديث الحالة إذا كانت المفضلة
+                if (targetId === 'favorites') {
+                    appState.currentView = 'favorites';
+                    updateView();
+                    renderFavorites();
+                } else {
+                    appState.currentView = targetId;
+                    updateView();
+                }
+            }
+        });
+    });
 }
 
 // ============================================
