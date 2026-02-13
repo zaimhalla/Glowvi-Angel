@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glowvi Angel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="ramadan.js" defer></script>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-gift"></i>
+                    <h1 id="storeName">Glowvi Angel</h1>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#home" data-i18n="nav.home"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="#categories" data-i18n="nav.categories"><i class="fas fa-th-large"></i> الفئات</a></li>
+                        <li><a href="#products" data-i18n="nav.products"><i class="fas fa-box-open"></i> المنتجات</a></li>
+                        <li><a href="#favorites" data-i18n="nav.favorites"><i class="fas fa-heart"></i> المفضلة</a></li>
+                        <li><a href="#about" data-i18n="nav.about"><i class="fas fa-info-circle"></i> عنا</a></li>
+                        <li><a href="#contact" data-i18n="nav.contact"><i class="fas fa-phone-alt"></i> اتصل بنا</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-actions">
+                    <!-- Heart Dark Mode Button -->
+                    <div class="heart-dark-mode">
+                        <input id="switch" type="checkbox">
+                        <label class="love-heart" for="switch">
+                            <i class="left"></i>
+                            <i class="right"></i>
+                            <i class="bottom"></i>
+                            <div class="round"></div>
+                        </label>
+                    </div>
+                    
+                    <!-- Language Selector -->
+                    <div class="language-selector">
+                        <button class="lang-btn" id="langBtn">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLang">AR</span>
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <button data-lang="ar">العربية</button>
+                            <button data-lang="en">English</button>
+                            <button data-lang="fr">Français</button>
+                        </div>
+                    </div>
+                    
+                    <button class="favorites-btn" id="favoritesBtn" title="المفضلة">
+                        <i class="fas fa-heart"></i>
+                        <span class="favorites-count" id="favoritesCount">0</span>
+                    </button>
+                    
+                    <button class="cart-btn" id="cartBtn" title="سلة التسوق">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    
+                    <div class="user-menu">
+                        <button class="user-btn" id="userBtn" title="حسابي">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <div class="user-dropdown" id="userDropdown">
+                            <a href="#" id="loginLink" data-i18n="nav.login">تسجيل الدخول</a>
+                            <a href="#" id="registerLink" data-i18n="nav.register">إنشاء حساب</a>
+                            <a href="#" id="userName" style="display:none; color:var(--dark-green); font-weight:bold;"></a>
+                            <a href="#" id="ordersLink" style="display:none;"><i class="fas fa-history"></i> طلباتي</a>
+                            <a href="#" id="logoutLink" data-i18n="nav.logout" style="display:none;">تسجيل الخروج</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Welcome Section -->
+    <section class="welcome-section" id="home">
+        <div class="container">
+            <div class="welcome-content">
+                <h2 data-i18n="welcome.title">مرحباً بكم في عالم الملاك المتوهج</h2>
+                <p data-i18n="welcome.description">اكتشفوا تشكيلتنا الفريدة من الديكورات المصممة بعناية لتضفي جمالاً ودفئاً على منزلكم. نقدم منتجات عالية الجودة مع إمكانية التوصيل لكل ولايات الجزائر.</p>
+                <div class="welcome-btns">
+                    <button class="btn btn-primary" id="exploreProducts">
+                        <i class="fas fa-shopping-bag"></i> <span data-i18n="welcome.browse">تصفح المنتجات</span>
+                    </button>
+                    <button class="btn btn-secondary" id="learnMore">
+                        <i class="fas fa-info-circle"></i> <span data-i18n="welcome.learn">تعرف علينا أكثر</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <h2 class="section-title" data-i18n="categories.title">فئات المنتجات</h2>
+            <div class="categories-grid" id="categoriesContainer">
+                <!-- Categories will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <h2 class="section-title" data-i18n="products.title">منتجاتنا المميزة</h2>
+            <div class="products-filter" id="productsFilter">
+                <!-- Filter buttons will be loaded here by JavaScript -->
+            </div>
+            <div class="products-grid" id="productsContainer">
+                <!-- Products will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Favorites Section -->
+    <section class="favorites-section" id="favorites" style="display:none;">
+        <div class="container">
+            <h2 class="section-title" data-i18n="favorites.title">منتجاتي المفضلة</h2>
+            <div class="products-grid" id="favoritesContainer">
+                <!-- Favorite products will be loaded here by JavaScript -->
+            </div>
+            <div class="empty-state" id="emptyFavorites">
+                <i class="fas fa-heart"></i>
+                <h3 data-i18n="favorites.empty">قائمة المفضلة فارغة</h3>
+                <p data-i18n="favorites.emptyDesc">لم تقم بإضافة أي منتجات إلى قائمة المفضلة بعد.</p>
+                <button class="btn btn-primary" id="browseFavorites" data-i18n="favorites.browse">تصفح المنتجات</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" style="padding: 60px 0;">
+        <div class="container">
+            <h2 class="section-title" data-i18n="about.title">عن متجرنا</h2>
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p style="font-size: 18px; margin-bottom: 30px; color: var(--gray);" data-i18n="about.description">
+                    نحن متجر متخصص في تقديم أفكار ديكورات مميزة تجمع بين الجمال والجودة. نحرص على تقديم منتجات فريدة تناسب جميع الأذواق والمناسبات.
+                </p>
+                <div class="delivery-info">
+                    <h4><i class="fas fa-shipping-fast"></i> <span data-i18n="about.delivery">التوصيل لكل ولايات الجزائر</span></h4>
+                    <p data-i18n="about.deliveryDesc">نقوم بالتوصيل لكل الولايات الـ 58 في الجزائر مع إمكانية التوصيل للمنزل أو المكتب</p>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px;">
+                    <div style="text-align: center; padding: 25px; background-color: var(--light-gray); border-radius: var(--radius);">
+                        <i class="fas fa-gift" style="font-size: 40px; color: var(--light-green); margin-bottom: 20px;"></i>
+                        <h3 style="color: var(--dark-green); margin-bottom: 15px;" data-i18n="about.feature1">منتجات مميزة</h3>
+                        <p data-i18n="about.feature1Desc">نقدم تشكيلة واسعة من المنتجات الفريدة</p>
+                    </div>
+                    <div style="text-align: center; padding: 25px; background-color: var(--light-gray); border-radius: var(--radius);">
+                        <i class="fas fa-shipping-fast" style="font-size: 40px; color: var(--light-green); margin-bottom: 20px;"></i>
+                        <h3 style="color: var(--dark-green); margin-bottom: 15px;" data-i18n="about.feature2">توصيل سريع</h3>
+                        <p data-i18n="about.feature2Desc">توصيل لكل ولايات الجزائر بأسعار مناسبة</p>
+                    </div>
+                    <div style="text-align: center; padding: 25px; background-color: var(--light-gray); border-radius: var(--radius);">
+                        <i class="fas fa-headset" style="font-size: 40px; color: var(--light-green); margin-bottom: 20px;"></i>
+                        <h3 style="color: var(--dark-green); margin-bottom: 15px;" data-i18n="about.feature3">دعم فوري</h3>
+                        <p data-i18n="about.feature3Desc">فريق دعم متاح للرد على استفساراتكم</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3 data-i18n="footer.about">عن المتجر</h3>
+                    <p data-i18n="footer.aboutDesc">متجر "الملاك المتوهج" يقدم تشكيلة فريدة من الديكورات المصممة بعناية لتناسب جميع الأذواق والمناسبات.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3 data-i18n="footer.links">روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#home" data-i18n="nav.home">الرئيسية</a></li>
+                        <li><a href="#categories" data-i18n="nav.categories">الفئات</a></li>
+                        <li><a href="#products" data-i18n="nav.products">المنتجات</a></li>
+                        <li><a href="#favorites" data-i18n="nav.favorites">المفضلة</a></li>
+                        <li><a href="#about" data-i18n="nav.about">عن المتجر</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 data-i18n="footer.contact">معلومات التواصل</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 0676013042</li>
+                        <li><i class="fas fa-envelope"></i> glowviangel@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> <span data-i18n="footer.address">بسكرة</span></li>
+                        <li><a href="https://wa.me/213676013042" target="_blank" style="color: var(--light-gray); text-decoration: none;">
+                            <i class="fab fa-whatsapp"></i> <span data-i18n="footer.whatsapp">الواتساب</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 data-i18n="footer.payment">طرق الدفع</h3>
+                    <p data-i18n="footer.paymentDesc">الدفع عند الاستلام متاح في جميع ولايات الجزائر. نحن نضمن لك منتجات عالية الجودة.</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p data-i18n="footer.copyright">© 2026 متجر "الملاك المتوهج". جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="auth.title">تسجيل الدخول / إنشاء حساب</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login" data-i18n="auth.login">تسجيل الدخول</button>
+                    <button class="auth-tab" data-tab="register" data-i18n="auth.register">إنشاء حساب</button>
+                </div>
+                
+                <form id="loginForm" class="auth-form active">
+                    <div class="form-group">
+                        <label for="loginEmail" data-i18n="auth.email">البريد الإلكتروني</label>
+                        <input type="email" id="loginEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" data-i18n="auth.password">كلمة المرور</label>
+                        <input type="password" id="loginPassword" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="auth.loginBtn">تسجيل الدخول</button>
+                </form>
+                
+                <form id="registerForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="registerName" data-i18n="auth.fullName">الاسم الكامل</label>
+                        <input type="text" id="registerName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail" data-i18n="auth.email">البريد الإلكتروني</label>
+                        <input type="email" id="registerEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPhone" data-i18n="auth.phone">رقم الهاتف</label>
+                        <input type="tel" id="registerPhone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword" data-i18n="auth.password">كلمة المرور (6 أحرف على الأقل)</label>
+                        <input type="password" id="registerPassword" class="form-control" minlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerConfirmPassword" data-i18n="auth.confirmPassword">تأكيد كلمة المرور</label>
+                        <input type="password" id="registerConfirmPassword" class="form-control" minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="auth.registerBtn">إنشاء حساب</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="cart.title">سلة التسوق</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="cart-items" id="cartItemsContainer">
+                    <!-- Cart items will be loaded here by JavaScript -->
+                </div>
+                <div id="emptyCart" style="text-align: center; padding: 40px 20px;">
+                    <i class="fas fa-shopping-cart" style="font-size: 60px; color: var(--light-green); margin-bottom: 20px;"></i>
+                    <h3 style="color: var(--dark-green); margin-bottom: 15px;" data-i18n="cart.empty">سلة التسوق فارغة</h3>
+                    <p style="color: var(--gray); margin-bottom: 25px;" data-i18n="cart.emptyDesc">لم تقم بإضافة أي منتجات إلى سلة التسوق بعد.</p>
+                    <button class="btn btn-primary" id="browseProducts" data-i18n="cart.browse">تصفح المنتجات</button>
+                </div>
+                <div id="cartSummary" style="display: none;">
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 25px;" id="checkoutBtn" data-i18n="cart.checkout">إتمام الطلب</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="checkout.title">إتمام الطلب</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="checkoutForm">
+                    <div class="form-group">
+                        <label for="checkoutName" data-i18n="checkout.fullName">الاسم الكامل *</label>
+                        <input type="text" id="checkoutName" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="checkoutEmail" data-i18n="checkout.email">البريد الإلكتروني *</label>
+                        <input type="email" id="checkoutEmail" class="form-control" required 
+                               placeholder="example@gmail.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="checkoutPhone" data-i18n="checkout.phone">رقم الهاتف *</label>
+                        <input type="tel" id="checkoutPhone" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="checkoutState" data-i18n="checkout.state">الولاية *</label>
+                        <div class="select-wrapper">
+                            <select id="checkoutState" class="form-control" required>
+                                <option value="" data-i18n="checkout.selectState">اختر الولاية</option>
+                                <!-- Algerian states will be loaded by JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="checkoutMunicipality" data-i18n="checkout.municipality">البلدية *</label>
+                        <div style="position: relative;">
+                            <input type="text" id="checkoutMunicipality" class="form-control" required>
+                            <div class="suggestions-list" id="municipalitySuggestions">
+                                <!-- Municipality suggestions will appear here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Delivery Type Selection -->
+                    <div class="form-group">
+                        <label data-i18n="checkout.deliveryType">نوع التوصيل *</label>
+                        <div class="delivery-options">
+                            <div class="delivery-option" data-type="home">
+                                <i class="fas fa-home"></i>
+                                <h4 data-i18n="checkout.homeDelivery">توصيل للمنزل</h4>
+                                <div class="price" id="homeDeliveryPrice">400 د.ج</div>
+                            </div>
+                            <div class="delivery-option" data-type="office">
+                                <i class="fas fa-building"></i>
+                                <h4 data-i18n="checkout.officeDelivery">توصيل للمكتب</h4>
+                                <div class="price" id="officeDeliveryPrice">600 د.ج</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="deliveryType" value="home">
+                        <input type="hidden" id="deliveryPrice" value="400">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="checkoutNotes" data-i18n="checkout.notes">ملاحظات إضافية (اختياري)</label>
+                        <textarea id="checkoutNotes" class="form-control" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="delivery-info">
+                        <h4><i class="fas fa-info-circle"></i> <span data-i18n="checkout.info">معلومات مهمة</span></h4>
+                        <p data-i18n="checkout.infoDesc">الدفع عند الاستلام فقط. سيتم إرسال إشعار الطلب إلى إدارة المتجر.</p>
+                        <p id="shippingCostInfo" style="margin-top: 10px; font-weight: 600;"></p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="agreeTerms" required>
+                            <span data-i18n="checkout.agree">أوافق على <a href="#" style="color: var(--dark-green);">الشروط والأحكام</a></span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="checkout.confirm">تأكيد الطلب</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Success Modal -->
+    <div class="modal" id="emailSuccessModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>✅ تم إرسال طلبك بنجاح!</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body email-success">
+                <i class="fas fa-envelope-open-text email-success-icon"></i>
+                
+                <h3 style="color: var(--dark-green); margin-bottom: 15px;">
+                    شكراً لتسوقك معنا!
+                </h3>
+                
+                <div class="email-success-details" id="emailOrderDetails">
+                    <!-- Order details will be added here -->
+                </div>
+                
+                <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4 style="color: #2e7d32; margin-bottom: 10px;">
+                        <i class="fas fa-check-circle"></i> ماذا بعد؟
+                    </h4>
+                    <p style="color: #555; margin: 5px 0; font-size: 14px;">
+                        1. تم إرسال إشعار الطلب إلى إدارة المتجر
+                    </p>
+                    <p style="color: #555; margin: 5px 0; font-size: 14px;">
+                        2. سيتم الاتصال بك خلال 24 ساعة لتأكيد الموعد
+                    </p>
+                    <p style="color: #555; margin: 5px 0; font-size: 14px;">
+                        3. يمكنك حفظ الإيصال للرجوع إليه
+                    </p>
+                </div>
+                
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="closeModal('emailSuccessModal'); window.location.reload();">
+                        <i class="fas fa-home"></i> العودة للرئيسية
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('emailSuccessModal'); closeModal('receiptModal');">
+                        <i class="fas fa-receipt"></i> عرض الإيصال
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="modal" id="receiptModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="receipt.title">إيصال الطلب</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="receipt" id="receiptContent">
+                    <!-- Receipt content will be generated by JavaScript -->
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="window.print()" data-i18n="receipt.print">
+                        <i class="fas fa-print"></i> طباعة الإيصال
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('receiptModal')" style="margin-right: 10px;" data-i18n="receipt.close">
+                        إغلاق
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div class="modal" id="productDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="productDetailsTitle" data-i18n="product.details">تفاصيل المنتج</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="display: flex; flex-direction: column; gap: 30px;">
+                    <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 250px;">
+                            <div style="width: 100%; height: 300px; border-radius: var(--radius); overflow: hidden;">
+                                <img id="productDetailsImage" src="" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                        <div style="flex: 2; min-width: 250px;">
+                            <h3 id="productDetailsName" style="color: var(--dark-green); margin-bottom: 15px;"></h3>
+                            <p id="productDetailsDescription" style="color: var(--gray); margin-bottom: 20px;"></p>
+                            <div style="font-size: 24px; color: var(--brown); font-weight: 700; margin-bottom: 25px;">
+                                <span id="productDetailsPrice"></span> د.ج
+                            </div>
+                            <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+                                <button class="btn btn-primary" id="addToCartFromDetails">
+                                    <i class="fas fa-cart-plus"></i> <span data-i18n="product.addToCart">أضف إلى السلة</span>
+                                </button>
+                                <button class="btn btn-secondary" id="toggleFavoriteFromDetails">
+                                    <i class="far fa-heart"></i> <span data-i18n="product.addToFav">أضف إلى المفضلة</span>
+                                </button>
+                            </div> 
+                            <div class="delivery-info">
+                                <h4><i class="fas fa-shipping-fast"></i> <span data-i18n="product.deliveryInfo">معلومات التوصيل</span></h4> 
+                                <p data-i18n="product.deliveryDesc"> التوصيل متاح لكل ولايات الجزائر</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Orders Modal -->
+    <div class="modal" id="userOrdersModal">
+        <div class="modal-content" style="max-width: 800px; max-height: 80vh;">
+            <div class="modal-header">
+                <h2>طلباتي السابقة</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" style="overflow-y: auto; max-height: 60vh;">
+                <div id="userOrdersList"></div>
+                <div id="emptyOrdersMessage" style="display: none; text-align: center; padding: 40px;">
+                    <i class="fas fa-shopping-bag" style="font-size: 60px; color: var(--light-green); margin-bottom: 20px;"></i>
+                    <h3 style="color: var(--dark-green);">لا توجد طلبات سابقة</h3>
+                    <p style="color: var(--gray);">لم تقم بإجراء أي طلبات بعد</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">تمت العملية بنجاح</span>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p data-i18n="loading">جاري التحميل...</p>
+    </div>
+
+    <script src="app.js"></script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDJIzkusddK510YIfUOjWSNO-nXrOA5ho8",
+    authDomain: "my-shop-36ea8.firebaseapp.com",
+    databaseURL: "https://my-shop-36ea8-default-rtdb.firebaseio.com",
+    projectId: "my-shop-36ea8",
+    storageBucket: "my-shop-36ea8.firebasestorage.app",
+    messagingSenderId: "402674812307",
+    appId: "1:402674812307:web:0f996533b526c78de8d466",
+    measurementId: "G-FFSEW0ZPCT"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+</body>
+</html>
