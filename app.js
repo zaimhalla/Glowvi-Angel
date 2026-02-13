@@ -23,10 +23,10 @@ const database = firebase.database();
 
 // 🔧 EmailJS Configuration
 const EMAILJS_CONFIG = {
-    serviceID: 'service_owz8y3g',
-    adminTemplateID: 'template_p59af9k',
+    serviceID: 'service_clkuypo',
+    adminTemplateID: 'template_rh1ke7r',
     publicKey: 'CpxyIip4oIsk3dbQu',
-    adminEmail: 'zaimhala23@gmail.com'
+    adminEmail: 'glowviangel@gmail.com'
 };
 
 // 🏪 App State
@@ -437,26 +437,26 @@ const algerianStates = [
     { 
         name: "أدرار", 
         municipalities: ["أدرار", "رقان", "بودة", "تامنتيت", "تيمقطن", "تيت", "زاوية كنتة"],
-        homeDelivery: 1000,
-        officeDelivery: 1200
-    },
+        homeDelivery: 1200,
+        officeDelivery: 1500 
+    }, 
     { 
         name: "الشلف", 
         municipalities: ["الشلف", "وادي الفضة", "بني حواء", "المرسى", "زبوجة", "أولاد عباس", "الكريمية"],
-        homeDelivery: 400,
-        officeDelivery: 600
+        homeDelivery: 500,
+        officeDelivery: 900
     },
     { 
         name: "الأغواط", 
         municipalities: ["الأغواط", "قصر الحيران", "حاسي الرمل", "سبقاق", "تاويالة", "العسافية", "غارداية"],
-        homeDelivery: 600,
-        officeDelivery: 800
+        homeDelivery: 800,
+        officeDelivery: 1100
     },
     { 
         name: "أم البواقي", 
         municipalities: ["أم البواقي", "عين البيضاء", "عين مليلة", "سوق نعمان", "قصر الصبيحي", "العامرية", "الحرملية"],
         homeDelivery: 500,
-        officeDelivery: 700
+        officeDelivery: 900
     },
     { 
         name: "باتنة", 
@@ -467,20 +467,20 @@ const algerianStates = [
     { 
         name: "بجاية", 
         municipalities: ["بجاية", "أقبو", "أميزور", "خراطة", "القصر", "سيدي عيش", "توجة"],
-        homeDelivery: 450,
-        officeDelivery: 650
+        homeDelivery: 550,
+        officeDelivery: 900
     },
     { 
         name: "بسكرة", 
         municipalities: ["بسكرة", "أورلال", "برج بن عزوز", "جمورة", "الوطاية", "ليوة", "مشونش"],
-        homeDelivery: 700,
-        officeDelivery: 900
+        homeDelivery: 400,
+        officeDelivery: 500
     },
     { 
         name: "بشار", 
         municipalities: ["بشار", "بني ونيف", "القنادسة", "تبلبالة", "تاغيت", "المريجة", "العبادلة"],
-        homeDelivery: 1000,
-        officeDelivery: 1200
+        homeDelivery: 2000,
+        officeDelivery: 1500
     },
     { 
         name: "البليدة", 
@@ -491,44 +491,44 @@ const algerianStates = [
     { 
         name: "البويرة", 
         municipalities: ["البويرة", "الأخضرية", "عين بسام", "بئر غبالو", "حيزر", "سوق الخميس", "سور الغزلان"],
-        homeDelivery: 400,
-        officeDelivery: 600
+        homeDelivery: 500,
+        officeDelivery: 900
     },
     { 
         name: "تمنراست", 
         municipalities: ["تمنراست", "عين قزام", "عين أمقل", "إدلس", "تاظروك", "تين زواتين", "عين صالح"],
-        homeDelivery: 1200,
+        homeDelivery: 2000,
         officeDelivery: 1400
     },
     { 
         name: "تبسة", 
         municipalities: ["تبسة", "العوينات", "بئر العاتر", "بئر مقدم", "الشريعة", "مرسط", "نقرين"],
-        homeDelivery: 800,
+        homeDelivery: 700,
         officeDelivery: 1000
     },
     { 
         name: "تلمسان", 
         municipalities: ["تلمسان", "بني مستار", "الفحول", "الغزوات", "حمام بوحجر", "سبدو", "سيدي مجاهد"],
-        homeDelivery: 500,
-        officeDelivery: 700
+        homeDelivery: 550,
+        officeDelivery: 900
     },
     { 
         name: "تيارت", 
         municipalities: ["تيارت", "عين الذهب", "عين كرمس", "مهدية", "رحوية", "قصر الشلالة", "سيدي عابد"],
-        homeDelivery: 500,
-        officeDelivery: 700
+        homeDelivery: 550,
+        officeDelivery: 900
     },
     { 
         name: "تيزي وزو", 
         municipalities: ["تيزي وزو", "أزفون", "بنى دوالة", "بني يني", "بوغني", "ذراع الميزان", "مقلع"],
-        homeDelivery: 400,
-        officeDelivery: 600
+        homeDelivery: 500,
+        officeDelivery: 900
     },
     { 
         name: "الجزائر", 
         municipalities: ["الجزائر الوسطى", "باب الوادي", "الحراش", "الرويبة", "الدار البيضاء", "باش جراح", "بولوغين", "القبة", "الشراقة", "حسين داي"],
-        homeDelivery: 300,
-        officeDelivery: 500
+        homeDelivery: 500,
+        officeDelivery: 900
     },
     { 
         name: "الجلفة", 
@@ -539,86 +539,231 @@ const algerianStates = [
     { 
         name: "جيجل", 
         municipalities: ["جيجل", "الميلية", "الطاهير", "القنار", "سيدي معروف", "الشقفة", "العنصر"],
-        homeDelivery: 450,
-        officeDelivery: 650
+        homeDelivery: 550,
+        officeDelivery: 900
     },
     { 
         name: "سطيف", 
         municipalities: ["سطيف", "عين أرنات", "عين ولمان", "بئر العرش", "بوعنداس", "جميلة", "حمام قرقور"],
-        homeDelivery: 450,
-        officeDelivery: 650
+        homeDelivery: 500,
+        officeDelivery: 900
     },
     { 
         name: "سعيدة", 
         municipalities: ["سعيدة", "عين السلطان", "الحساسنة", "مولاي العربي", "سيدي أحمد", "سيدي عمر", "البيض"],
-        homeDelivery: 700,
-        officeDelivery: 900
+        homeDelivery: 650,
+        officeDelivery: 1000
     },
     { 
         name: "سكيكدة", 
         municipalities: ["سكيكدة", "أم الطوب", "بن عزوز", "الحدائق", "القل", "رمضان جمال", "الزيتونة"],
-        homeDelivery: 450,
-        officeDelivery: 650
+        homeDelivery: 550,
+        officeDelivery: 900
     },
     { 
         name: "سيدي بلعباس", 
         municipalities: ["سيدي بلعباس", "بن باديس", "مرحوم", "مزاورو", "رأس الماء", "سيدي علي بوسيدي", "تسالة"],
         homeDelivery: 550,
-        officeDelivery: 750
+        officeDelivery: 900
     },
     { 
         name: "عنابة", 
         municipalities: ["عنابة", "البوني", "الحجار", "سرايدي", "الشرفة", "عين الباردة", "برحال"],
-        homeDelivery: 450,
-        officeDelivery: 650
+        homeDelivery: 550,
+        officeDelivery: 900
     },
     { 
         name: "قالمة", 
         municipalities: ["قالمة", "بوشقوف", "حمام دباغ", "حمام النبايل", "هيليوبوليس", "وادي الزناتي", "عين بن بيضاء"],
-        homeDelivery: 450,
-        officeDelivery: 650
+        homeDelivery: 650,
+        officeDelivery: 1000
     },
     { 
         name: "قسنطينة", 
         municipalities: ["قسنطينة", "ابن زياد", "الخروب", "عين السمارة", "حامة بوزيان", "زيغود يوسف", "الخناق"],
-        homeDelivery: 400,
-        officeDelivery: 600
+        homeDelivery: 500,
+        officeDelivery: 900
     },
     { 
         name: "المدية", 
         municipalities: ["المدية", "العزيزية", "الشهبونية", "العفرون", "أولاد عنتر", "أولاد إبراهيم", "تابنة"],
-        homeDelivery: 400,
-        officeDelivery: 600
+        homeDelivery: 500,
+        officeDelivery: 900
     },
     { 
         name: "مستغانم", 
         municipalities: ["مستغانم", "حجاج", "خير الدين", "مزغران", "عين تادلس", "سيدي علي", "صيادة"],
-        homeDelivery: 450,
-        officeDelivery: 650
+        homeDelivery: 550,
+        officeDelivery: 900
     },
     { 
         name: "المسيلة", 
         municipalities: ["المسيلة", "أولاد دراج", "بن زوه", "برهوم", "حمام الضلعة", "المعاضيد", "سيدي عامر"],
         homeDelivery: 550,
-        officeDelivery: 750
+        officeDelivery: 900
     },
     { 
         name: "معسكر", 
         municipalities: ["معسكر", "بوحنيفية", "غريس", "حسين", "مخادمة", "مقطع الدوز", "سيق"],
         homeDelivery: 500,
-        officeDelivery: 700
+        officeDelivery: 900
     },
     { 
         name: "ورقلة", 
         municipalities: ["ورقلة", "حاسي مسعود", "انقوسة", "البرمة", "حاسي بن عبد الله", "عين البيضاء", "الرويسات"],
-        homeDelivery: 900,
-        officeDelivery: 1100
+        homeDelivery: 800,
+        officeDelivery: 1200
     },
     { 
         name: "وهران", 
         municipalities: ["وهران", "عين الترك", "أرزيو", "بئر الجير", "بطيوة", "السانية", "قديل"],
-        homeDelivery: 400,
-        officeDelivery: 600
+        homeDelivery: 500,
+        officeDelivery: 900
+    },
+    // ✅ الولايات الجديدة المطلوبة
+    { 
+        name: "برج بوعريريج", 
+        municipalities: ["برج بوعريريج", "رأس الوادي", "برج زمورة", "الياشير", "جعافرة", "الحمادية", "القصور", "عين تاغروت", "تسامرت", "بئر قاصد علي", "المهير", "أولاد دحمان", "أولاد سيدي ابراهيم", "سيدي أمبارك", "تقلعيت", "ثنية النصر", "حرازة", "مجانة", "الماين", "العش", "الجعافرة", "أولاد تبان"],
+        homeDelivery: 500,
+        officeDelivery: 900
+    },
+    { 
+        name: "بومرداس", 
+        municipalities: ["بومرداس", "بودواو", "الاربعاء", "دلس", "قورصو", "يسر", "خميس الخشنة", "تيجلابين", "برج منايل", "بغلية"],
+        homeDelivery: 450,
+        officeDelivery: 700
+    },
+    { 
+        name: "تيبازة", 
+        municipalities: ["تيبازة", "شرشال", "القليعة", "حجوط", "فوكة", "سيدي غيلاس", "عين تاقورايت", "الحطاطبة", "مراد", "نخيلة"],
+        homeDelivery: 450,
+        officeDelivery: 700
+    },
+    { 
+        name: "عين الدفلى", 
+        municipalities: ["عين الدفلى", "خميس مليانة", "العطاف", "مليانة", "برج الأمير خالد", "جندل", "عين التركي", "العبادية", "بومدفع"],
+        homeDelivery: 500,
+        officeDelivery: 800
+    },
+    { 
+        name: "تيسمسيلت", 
+        municipalities: ["تيسمسيلت", "برج بونعامة", "خميستي", "ثنية الحد", "الأزهرية", "لرجام", "سيدي سليمان", "بوقائد"],
+        homeDelivery: 550,
+        officeDelivery: 900
+    },
+    { 
+        name: "غليزان", 
+        municipalities: ["غليزان", "مازونة", "وادي رهيو", "عمي موسى", "جديوية", "سيدي خطاب", "الرمكة", "منداس", "الحمادنة"],
+        homeDelivery: 550,
+        officeDelivery: 900
+    },
+    { 
+        name: "خنشلة", 
+        municipalities: ["خنشلة", "قايس", "ششار", "بابار", "الحامة", "بوحمامة", "الماء الابيض", "ولاد رشاش"],
+        homeDelivery: 650,
+        officeDelivery: 1000
+    },
+    { 
+        name: "سوق أهراس", 
+        municipalities: ["سوق أهراس", "سدراتة", "المراهنة", "مشروحة", "تاورة", "الحنانشة", "أولاد إدريس", "الخضارة"],
+        homeDelivery: 650   ,
+        officeDelivery: 1000
+    },
+    { 
+        name: "عين تموشنت", 
+        municipalities: ["عين تموشنت", "حمام بوحجر", "المالح", "بني صاف", "ولهاصة", "العامرية", "سيدي بن عدة", "بني سفيان"],
+        homeDelivery: 650,
+        officeDelivery: 1000
+    },
+    { 
+        name: "ولاد جلال", 
+        municipalities: ["ولاد جلال", "الدوسن", "بسباس"],
+        homeDelivery: 1200,
+        officeDelivery: 1100
+    },
+    { 
+        name: "البيض", 
+        municipalities: ["البيض", "بوعلام", "بوقطب", "بريزينة", "الشلالة", "الوسطع"],
+        homeDelivery: 1200,
+        officeDelivery: 1100
+    },
+    { 
+        name: "الوادي", 
+        municipalities: ["الوادي", "الرباح", "قمار", "الدبيلة", "حاسي خليفة", "المغير", "الطالب العربي"],
+        homeDelivery: 900,
+        officeDelivery: 1200
+    },
+    { 
+        name: "النعامة", 
+        municipalities: ["النعامة", "مشرية", "عين الصفراء", "تيوت", "العوينات", "مكمن بن عمار"],
+        homeDelivery: 1200,
+        officeDelivery: 1100
+    },
+    { 
+        name: "غرداية", 
+        municipalities: ["غرداية", "القرارة", "بريان", "العطف", "ضاية بن ضحوة", "زلفانة"],
+        homeDelivery: 900,
+        officeDelivery: 1200
+    },
+    { 
+        name: "تقرت", 
+        municipalities: ["تقرت", "الطايب", "الزاوية العابدية", "النزلة", "تماسين", "بلدة أعمر"],
+        homeDelivery: 1200,
+        officeDelivery: 1000
+    },
+    { 
+        name: "المغير", 
+        municipalities: ["المغير", "جامعة", "سيدي عمران", "المعدية", "الأبيض"],
+        homeDelivery: 900,
+        officeDelivery: 1200
+    },
+    { 
+        name: "المنيعة", 
+        municipalities: ["المنيعة", "حاسي الفحل", "حاسي القارة"],
+        homeDelivery: 1100,
+        officeDelivery: 1400
+    },
+    { 
+        name: "تيميمون", 
+        municipalities: ["تيميمون", "أولاد سعيد", "قصر قدور", "المطارفة", "تيدكلت"],
+        homeDelivery: 1200,
+        officeDelivery: 1500 
+    },
+    { 
+        name: "بني عباس", 
+        municipalities: ["بني عباس", "بني ويف", "تبلبالة", "العبادلة", "إقلي", "وادي الصفاء"],
+        homeDelivery: 1200,
+        officeDelivery: 1500
+    },
+    { 
+        name: "عين صالح", 
+        municipalities: ["عين صالح", "عين قزام", "إدلس", "فوقارة"],
+        homeDelivery: 1200,
+        officeDelivery: 1500 
+    },
+    { 
+        name: "تندوف", 
+        municipalities: ["تندوف", "أم العسل"],
+        homeDelivery: 1600,
+        officeDelivery: 2000
+    },
+    { 
+        name: "إيليزي", 
+        municipalities: ["إيليزي", "جانت", "عين أمقل"],
+        homeDelivery: 2000,
+        officeDelivery: 2200
+    },
+    { 
+        name: "برج باجي مختار", 
+        municipalities: ["برج باجي مختار", "تيمياوين"],
+        homeDelivery: 2000,
+        officeDelivery: 2200
+    },
+    { 
+        name: "جانت", 
+        municipalities: ["جانت", "برج الحواس"],
+        homeDelivery: 2000,
+        officeDelivery: 2200
     }
 ];
 
@@ -799,6 +944,44 @@ const translations = {
 
 // 🎯 DOM Elements
 let domElements = {};
+
+// ============================================
+// 🔢 دوال ترقيم الطلبات التسلسلية (المضافة حديثاً)
+// ============================================
+
+// دالة للحصول على رقم الطلب التالي
+async function getNextOrderNumber() {
+    try {
+        // نستخدم مرجع للعداد في Firebase
+        const counterRef = database.ref('orderCounter');
+        
+        // نجري عملية ذرية لزيادة العداد
+        const result = await counterRef.transaction(currentCount => {
+            return (currentCount || 0) + 1;
+        });
+        
+        // إذا نجحت العملية، نرجع الرقم الجديد
+        if (result.committed) {
+            return result.snapshot.val();
+        } else {
+            // إذا فشلت، نستخدم الطريقة البديلة
+            const snapshot = await counterRef.once('value');
+            const newCount = (snapshot.val() || 0) + 1;
+            await counterRef.set(newCount);
+            return newCount;
+        }
+    } catch (error) {
+        console.error('خطأ في الحصول على رقم الطلب:', error);
+        // إذا فشل كل شيء، نستخدم التاريخ كرقم مؤقت
+        return parseInt(Date.now().toString().slice(-6));
+    }
+}
+
+// دالة لتنسيق رقم الطلب بشكل جميل
+function formatOrderNumber(num) {
+    return num.toString(); // يمكن تغييرها إلى ORD-0001 إذا أردت
+    // return 'ORD-' + num.toString().padStart(4, '0');
+}
 
 // 🚀 Initialize App
 document.addEventListener('DOMContentLoaded', function() {
@@ -2298,6 +2481,10 @@ async function handleCheckout(e) {
         const shipping = appState.deliveryPrice;
         const total = subtotal + shipping;
         
+        // الحصول على رقم الطلب التسلسلي
+        const orderNumberValue = await getNextOrderNumber();
+        const orderNumber = formatOrderNumber(orderNumberValue);
+        
         const order = {
             customerName: document.getElementById('checkoutName').value,
             customerEmail: document.getElementById('checkoutEmail').value,
@@ -2324,8 +2511,9 @@ async function handleCheckout(e) {
             status: 'جديد',
             paymentMethod: 'الدفع عند الاستلام',
             createdAt: new Date().toISOString(),
+            orderTime: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }),
             userId: appState.currentUser.uid,
-            orderNumber: 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+            orderNumber: orderNumber,
             language: appState.currentLanguage
         };
         
@@ -2376,12 +2564,14 @@ async function sendOrderNotificationToStoreOwner(order) {
         const emailData = {
             order_number: order.orderNumber,
             order_date: new Date(order.createdAt).toLocaleDateString('ar-EG'),
+            order_time: order.orderTime,
             customer_name: order.customerName,
             customer_phone: order.phone,
             customer_email: order.customerEmail,
             customer_address: `${order.state} - ${order.municipality}`,
             delivery_type: order.deliveryType === 'home' ? 'توصيل للمنزل' : 'توصيل للمكتب',
             delivery_cost: order.shipping + ' د.ج',
+            items_count: order.items.length,
             order_items: orderItemsText,
             subtotal: order.subtotal + ' د.ج',
             shipping: order.shipping + ' د.ج',
