@@ -806,13 +806,12 @@ const translations = {
         "cart.checkout": "إتمام الطلب",
         
         "checkout.title": "إتمام الطلب",
-        "checkout.fullName": "الاسم الكامل *",
-        "checkout.email": "البريد الإلكتروني *",
-        "checkout.phone": "رقم الهاتف *",
-        "checkout.state": "الولاية *",
+        "checkout.fullName": "الاسم الكامل ",
+        "checkout.phone": "رقم الهاتف ",
+        "checkout.state": "الولاية ",
         "checkout.selectState": "اختر الولاية",
-        "checkout.municipality": "البلدية *",
-        "checkout.deliveryType": "نوع التوصيل *",
+        "checkout.municipality": "البلدية ",
+        "checkout.deliveryType": "نوع التوصيل* ",
         "checkout.homeDelivery": "توصيل للمنزل",
         "checkout.officeDelivery": "توصيل للمكتب",
         "checkout.notes": "ملاحظات إضافية ",
@@ -863,7 +862,6 @@ const translations = {
         
         "checkout.title": "Complete Order",
         "checkout.fullName": "Full Name *",
-        "checkout.email": "Email *",
         "checkout.phone": "Phone Number *",
         "checkout.state": "State *",
         "checkout.selectState": "Choose State",
@@ -919,7 +917,6 @@ const translations = {
         
         "checkout.title": "Terminer la commande",
         "checkout.fullName": "Nom complet *",
-        "checkout.email": "E-mail *",
         "checkout.phone": "Numéro de téléphone *",
         "checkout.state": "État *",
         "checkout.selectState": "Choisir l'état",
@@ -1120,8 +1117,8 @@ function setLanguage(lang) {
     });
     
     const storeName = document.getElementById('storeName');
-    if (lang === 'en') storeName.textContent = 'Gifts and Beautiful Things';
-    else if (lang === 'fr') storeName.textContent = 'Cadeaux et Belles Choses';
+    if (lang === 'en') storeName.textContent = 'Glowvi Angel';
+    else if (lang === 'fr') storeName.textContent = 'Glowvi Angel';
     else storeName.textContent = 'الملاك المتوهج';
     
     renderCategories();
@@ -1234,6 +1231,7 @@ function setupEventListeners() {
     
     // تحديث سعر التوصيل
     domElements.checkoutState.addEventListener('change', function() {
+        console.log('📍 تغيرت الولاية إلى:', this.value);
         calculateShippingCost();
         updateShippingCostInfo();
         domElements.municipalityInput.value = '';
@@ -1245,6 +1243,7 @@ function setupEventListeners() {
             domElements.deliveryOptions.forEach(opt => opt.classList.remove('selected'));
             this.classList.add('selected');
             appState.deliveryType = this.getAttribute('data-type');
+            console.log('🚚 تغير نوع التوصيل إلى:', appState.deliveryType);
             calculateShippingCost();
             updateShippingCostInfo();
         });
@@ -1269,7 +1268,7 @@ function setupEventListeners() {
         handleLogout();
     });
     
-    // ✅ إصلاح رابط طلباتي - لن يفتح تلقائياً عند الدخول
+    // ✅ إصلاح رابط طلباتي
     document.getElementById('ordersLink').addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -1749,10 +1748,10 @@ function openCheckoutModal() {
     
     if (appState.currentUser) {
         document.getElementById('checkoutName').value = appState.currentUser.displayName || '';
-        document.getElementById('checkoutEmail').value = appState.currentUser.email || '';
         document.getElementById('checkoutPhone').value = appState.currentUser.phone || '';
     }
     
+    // حساب سعر التوصيل عند فتح النافذة
     calculateShippingCost();
     updateShippingCostInfo();
     
@@ -1799,8 +1798,8 @@ function openProductDetailsModal(product) {
     
     const favBtn = document.getElementById('toggleFavoriteFromDetails');
     favBtn.innerHTML = isFavorite ? 
-        `<i class="fas fa-heart"></i> ${translations[appState.currentLanguage]?.product?.removeFromFav || 'إزالة من المفضلة'}` : 
-        `<i class="far fa-heart"></i> ${translations[appState.currentLanguage]?.product?.addToFav || 'أضف إلى المفضلة'}`;
+        `<i class="fas fa-heart"></i> إزالة من المفضلة` : 
+        `<i class="far fa-heart"></i> أضف إلى المفضلة`;
     
     favBtn.onclick = () => {
         toggleFavorite(product);
@@ -1946,7 +1945,6 @@ function setupPhoneValidation() {
 function validateCheckoutForm() {
     const requiredFields = [
         'checkoutName',
-        'checkoutEmail',
         'checkoutPhone',
         'checkoutState',
         'checkoutMunicipality'
@@ -1961,10 +1959,9 @@ function validateCheckoutForm() {
         }
     }
     
-    const email = document.getElementById('checkoutEmail').value;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        showNotification('البريد الإلكتروني غير صالح', 'error');
+    const phone = document.getElementById('checkoutPhone').value;
+    if (phone.length < 10) {
+        showNotification('رقم الهاتف يجب أن يكون 10 أرقام على الأقل', 'error');
         return false;
     }
     
@@ -2205,8 +2202,7 @@ function showThankYouMessage(order) {
     // إضافة الرسالة للصفحة
     document.body.appendChild(thankYouMessage);
 
-    // إغلاق تلقائي بعد 7 ثواني
-    setTimeout(closeThankYouMessage, 7000);
+    // تم إزالة الإغلاق التلقائي - الرسالة تبقى حتى يضغط المستخدم على زر تم
 }
 
 // دالة إغلاق رسالة الشكر
@@ -2218,18 +2214,11 @@ function closeThankYouMessage() {
     }
 }
 
-// 🧾 دالة إنشاء الإيصال مع خلفية الإيصال فقط بدون نافذة خلفية
+// 🧾 دالة إنشاء الإيصال (بدون باركود)
 function generateReceipt(order) {
     const now = new Date();
     const dateStr = now.toLocaleDateString('ar-EG');
     const timeStr = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
-    
-    // إنشاء الباركود بصيغة نصية بسيطة
-    const barcodeText = order.orderNumber.replace(/[^0-9]/g, '');
-    const barcodeLines = barcodeText.split('').map(num => {
-        const lines = '│'.repeat(parseInt(num) + 1);
-        return `<div style="display: inline-block; width: 2px; background: black; height: ${(parseInt(num) + 1) * 8}px; margin: 0 1px;"></div>`;
-    }).join('');
     
     let itemsHTML = '';
     order.items.forEach((item, index) => {
@@ -2246,7 +2235,7 @@ function generateReceipt(order) {
         `;
     });
     
-    // 🔥 الإيصال الجديد بدون نافذة خلفية - خلفية الإيصال فقط
+    // 🔥 الإيصال بدون باركود
     const receiptHTML = `
         <div id="receiptPopup" style="
             position: fixed;
@@ -2267,13 +2256,11 @@ function generateReceipt(order) {
         ">
             <div style="text-align: center; margin-bottom: 10px;">
                 <p style="font-size: 1.2rem; font-weight: bold; color: #2E7D32; margin: 0;">
-                    ${appState.currentLanguage === 'ar' ? 'هدايا وأشياء جميلة' : 'Gifts and Beautiful Things'}
+                    ${appState.currentLanguage === 'ar' ? 'Glowvi Angel' : 'Glowvi Angel'}
                 </p>
             </div>
             
             <div style="text-align: center; font-size: 0.85rem; margin-bottom: 15px; color: #666; line-height: 1.4;">
-                1234 شارع السوق، جناح 101<br />
-                الجزائر العاصمة، الجزائر<br />
                 التاريخ: ${dateStr}<br />
                 الوقت: ${timeStr}
             </div>
@@ -2306,15 +2293,6 @@ function generateReceipt(order) {
                 <p style="margin: 0; color: #E91E63;">${order.total.toLocaleString()} د.ج</p>
             </div>
             
-            <div style="display: flex; justify-content: center; margin-top: 15px; padding: 10px; background: #f8f8f8; border-radius: 4px;">
-                <div style="text-align: center;">
-                    <div style="margin-bottom: 5px;">${barcodeLines}</div>
-                    <div style="font-family: monospace; font-size: 10px; letter-spacing: 2px; color: #333;">
-                        ${order.orderNumber}
-                    </div>
-                </div>
-            </div>
-
             <p style="font-size: 0.85rem; text-align: center; margin-top: 15px; color: #2E7D32; font-weight: bold; margin-bottom: 10px;">
                 شكراً لتسوقك معنا!
             </p>
@@ -2387,7 +2365,7 @@ function printReceipt() {
         <!DOCTYPE html>
         <html dir="rtl">
         <head>
-            <title>إيصال الطلب - ${appState.currentLanguage === 'ar' ? 'هدايا وأشياء جميلة' : 'Gifts and Beautiful Things'}</title>
+            <title>إيصال الطلب - ${appState.currentLanguage === 'ar' ? 'Glowvi Angel' : 'Glowvi Angel'}</title>
             <meta charset="UTF-8">
             <style>
                 @media print {
@@ -2477,6 +2455,10 @@ async function handleCheckout(e) {
             return;
         }
         
+        // التأكد من حساب سعر التوصيل بشكل صحيح
+        calculateShippingCost();
+        console.log('📦 سعر التوصيل النهائي:', appState.deliveryPrice);
+        
         const subtotal = appState.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const shipping = appState.deliveryPrice;
         const total = subtotal + shipping;
@@ -2485,9 +2467,9 @@ async function handleCheckout(e) {
         const orderNumberValue = await getNextOrderNumber();
         const orderNumber = formatOrderNumber(orderNumberValue);
         
+        // ✅ إنشاء كائن الطلب بدون إيميل
         const order = {
             customerName: document.getElementById('checkoutName').value,
-            customerEmail: document.getElementById('checkoutEmail').value,
             phone: document.getElementById('checkoutPhone').value,
             state: document.getElementById('checkoutState').value,
             municipality: document.getElementById('checkoutMunicipality').value,
@@ -2541,9 +2523,9 @@ async function handleCheckout(e) {
         updateCartCount();
         closeModal('checkoutModal');
         
-        // عرض رسالة الشكر أولاً
+        // عرض رسالة الشكر والإيصال
         setTimeout(() => {
-            showThankYouMessage(order); // 👈 رسالة الشكر الجديدة باللون الأخضر الفاتح
+            showThankYouMessage(order);
             generateReceipt(order);
         }, 500);
         
@@ -2561,13 +2543,13 @@ async function sendOrderNotificationToStoreOwner(order) {
             `${index + 1}. ${item.name}\n   الكمية: ${item.quantity}\n   السعر: ${item.price} د.ج\n   الإجمالي: ${item.price * item.quantity} د.ج`
         ).join('\n\n');
         
+        // ✅ إزالة customer_email من البيانات المرسلة
         const emailData = {
             order_number: order.orderNumber,
             order_date: new Date(order.createdAt).toLocaleDateString('ar-EG'),
             order_time: order.orderTime,
             customer_name: order.customerName,
             customer_phone: order.phone,
-            customer_email: order.customerEmail,
             customer_address: `${order.state} - ${order.municipality}`,
             delivery_type: order.deliveryType === 'home' ? 'توصيل للمنزل' : 'توصيل للمكتب',
             delivery_cost: order.shipping + ' د.ج',
@@ -2800,6 +2782,9 @@ function loadAlgerianStates() {
     });
 }
 
+// ============================================
+// 💰 دالة حساب سعر التوصيل - المعدلة
+// ============================================
 function calculateShippingCost() {
     const selectedStateName = domElements.checkoutState.value;
     const selectedState = algerianStates.find(state => state.name === selectedStateName);
@@ -2807,9 +2792,14 @@ function calculateShippingCost() {
     if (selectedState) {
         appState.deliveryPrice = appState.deliveryType === 'home' ? 
             selectedState.homeDelivery : selectedState.officeDelivery;
+        console.log('💰 سعر التوصيل المحسوب:', appState.deliveryPrice, 'للولاية:', selectedStateName, 'نوع التوصيل:', appState.deliveryType);
     } else {
+        // قيمة افتراضية إذا لم يتم اختيار ولاية
         appState.deliveryPrice = appState.deliveryType === 'home' ? 400 : 600;
+        console.log('💰 سعر التوصيل الافتراضي:', appState.deliveryPrice);
     }
+    
+    return appState.deliveryPrice;
 }
 
 function openModal(modalId) {
@@ -2869,6 +2859,4 @@ async function handleLogout() {
     }
 }
 
-console.log(`
-
-`);
+console.log(`✅ تم تحميل الكود بنجاح مع حذف الباركود وإزالة الإيميل وإلغاء الإغلاق التلقائي`);
