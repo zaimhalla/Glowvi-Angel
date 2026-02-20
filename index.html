@@ -193,10 +193,10 @@
                     <h3 data-i18n="footer.about">عن المتجر</h3>
                     <p data-i18n="footer.aboutDesc">متجر "الملاك المتوهج" يقدم تشكيلة فريدة من الديكورات المصممة بعناية لتناسب جميع الأذواق والمناسبات.</p>
                     <div class="social-links">
-    <a href="https://www.facebook.com/glowvi.angell" target="_blank"><i class="fab fa-facebook-f"></i></a>
-    <a href="https://www.instagram.com/glowvi_angel/" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://wa.me/213676013042" target="_blank"><i class="fab fa-whatsapp"></i></a>
-</div>
+                        <a href="https://www.facebook.com/glowvi.angell" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/glowvi_angel/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/213676013042" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
                 </div>
                 <div class="footer-column">
                     <h3 data-i18n="footer.links">روابط سريعة</h3>
@@ -232,7 +232,7 @@
 
     <!-- Modals -->
     
-    <!-- Auth Modal -->
+    <!-- Auth Modal - مع إضافة "نسيت كلمة السر" -->
     <div class="modal" id="authModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -245,6 +245,7 @@
                     <button class="auth-tab" data-tab="register" data-i18n="auth.register">إنشاء حساب</button>
                 </div>
                 
+                <!-- نموذج تسجيل الدخول -->
                 <form id="loginForm" class="auth-form active">
                     <div class="form-group">
                         <label for="loginEmail" data-i18n="auth.email">البريد الإلكتروني</label>
@@ -254,9 +255,18 @@
                         <label for="loginPassword" data-i18n="auth.password">كلمة المرور</label>
                         <input type="password" id="loginPassword" class="form-control" required>
                     </div>
+                    
+                    <!-- ✅ زر نسيت كلمة السر -->
+                    <div style="text-align: left; margin-bottom: 15px;">
+                        <a href="#" id="forgotPasswordLink" style="color: var(--dark-green); font-size: 14px; text-decoration: none;">
+                            <i class="fas fa-key"></i> <span data-i18n="auth.forgotPassword">نسيت كلمة السر؟</span>
+                        </a>
+                    </div>
+                    
                     <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="auth.loginBtn">تسجيل الدخول</button>
                 </form>
                 
+                <!-- نموذج إنشاء حساب -->
                 <form id="registerForm" class="auth-form">
                     <div class="form-group">
                         <label for="registerName" data-i18n="auth.fullName">الاسم الكامل</label>
@@ -279,6 +289,30 @@
                         <input type="password" id="registerConfirmPassword" class="form-control" minlength="6" required>
                     </div>
                     <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="auth.registerBtn">إنشاء حساب</button>
+                </form>
+                
+                <!-- ✅ نموذج إعادة تعيين كلمة السر (جديد) -->
+                <form id="resetPasswordForm" class="auth-form" style="display: none;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <i class="fas fa-key" style="font-size: 50px; color: var(--light-green); margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--dark-green); margin-bottom: 10px;" data-i18n="auth.resetPassword">إعادة تعيين كلمة السر</h3>
+                        <p style="color: var(--gray); font-size: 14px;" data-i18n="auth.enterEmail">أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="resetEmail" data-i18n="auth.email">البريد الإلكتروني</label>
+                        <input type="email" id="resetEmail" class="form-control" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" data-i18n="auth.sendResetLink">
+                        إرسال رابط إعادة التعيين
+                    </button>
+                    
+                    <div style="text-align: center;">
+                        <a href="#" id="backToLoginBtn" style="color: var(--dark-green); font-size: 14px; text-decoration: none;">
+                            <i class="fas fa-arrow-right"></i> <span data-i18n="auth.backToLogin">العودة لتسجيل الدخول</span>
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
