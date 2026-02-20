@@ -35,10 +35,10 @@ const appState = {
     favorites: [],
     currentUser: null,
     currentFilter: "all",
-    currentView: "home",
+    currentView: "home", // الصفحة الحالية (home, categories, products, favorites, about)
     currentLanguage: "ar",
     deliveryType: "home",
-    deliveryPrice: 400,
+    deliveryPrice: null,
     lastOrder: null,
     userOrders: []
 };
@@ -109,6 +109,7 @@ const categories = [
 
 // 🛍️ Products Data
 const products = [
+    // كوسترات - IDs من 1 إلى 8
     {
         id: 1,
         name: "كوستر دائري",
@@ -116,7 +117,7 @@ const products = [
         name_fr: "Sous-verre rond",
         category: "كوسترات",
         category_en: "Coasters",
-        category_fr: "Sous-verres",
+        category_fr: "Dessous de verre",
         price: 300,
         description: "كوستر دائري بلمسة فنية ناعمة ينسجم بسلاسة مع مختلف أنماط الديكور ويمنح طاولتك طابعًا مميزًا.",
         description_en: "Elegant round coaster with a soft artistic touch that blends seamlessly with various decor styles and gives your table a distinctive look.",
@@ -124,14 +125,14 @@ const products = [
         image: "5.jpg",
         dimensions: "20x15x10 سم"
     },
-     {
-        id: 1,
+    {
+        id: 2,
         name: "كوستر دائري بنقشة بارزة",
         name_en: "Luxury Engraved Round Coaster",
         name_fr: "Sous-verre rond de luxe gravé",
         category: "كوسترات",
         category_en: "Coasters",
-        category_fr: "Sous-verres",
+        category_fr: "Dessous de verre",
         price: 300,
         description: "كوستر دائري فاخر بتفاصيل منقوشة بدقة، يمنح طاولتك حضورًا أنيقًا ولمسة فنية مميزة.",
         description_en: "Luxury round coaster with finely engraved details, giving your table an elegant presence and a distinctive artistic touch.",
@@ -139,29 +140,29 @@ const products = [
         image: "6.jpg",
         dimensions: "20x15x10 سم" 
     },
-     {
-        id: 1,
+    {
+        id: 3,
         name: "كوستر دائري بتصميم مموج",
         name_en: "Luxury Wavy Design Round Coaster",
         name_fr: "Sous-verre rond de luxe avec design ondulé",
         category: "كوسترات",
-        category_en: "Coasters",
-        category_fr: "Sous-verres",
-        price: 300, 
+        category_en: "Coasters", 
+        category_fr: "Dessous de verre",
+        price: 300,
         description: "كوستر دائري بحواف مموجة بتفاصيل متقنة، يعكس ذوقًا راقيًا ويضيف حضورًا أنيقًا يلفت النظر في أي تنسيق ديكور.",
         description_en: "Luxury wavy design round coaster with finely crafted details, reflecting an elegant taste and adding an attractive presence that draws attention in any decor setting.",
         description_fr: "Sous-verre rond de luxe avec un design ondulé et des détails finement travaillés, reflétant un goût raffiné et ajoutant une présence attrayante qui attire l'attention dans n'importe quel décor.",
         image: "9.jpg",
         dimensions: "20x15x10 سم"
     },
-     {
-        id: 1,
+    {
+        id: 4,
         name:"كوستر زهرة",
         name_en: "Luxury Floral Design Coaster",
         name_fr: "Sous-verre de luxe avec design floral",
         category: "كوسترات",
-        category_en: "Coasters", 
-        category_fr: "Sous-verres",
+        category_en: "Coasters",
+        category_fr: "Dessous de verre",
         price: 300,
         description: "كوستر بشكل زهرة بتفاصيل راقية يمنح طاولتك لمسة أنثوية جذابة وحضورًا مميزًا",
         description_en: "Luxury floral design coaster with finely crafted details, adding an elegant artistic touch to your table and matching any decor setting.",
@@ -169,14 +170,14 @@ const products = [
         image: "3.jpg",
         dimensions: "20x15x10 سم"
     },
-     {
-        id: 1,
+    {
+        id: 5,
         name: "كوستر بنقشة كلاسيكية",
         name_en: "Classic Engraved Coaster",
         name_fr: "Sous-verre classique gravé",
         category: "كوسترات",
         category_en: "Coasters",
-        category_fr: "Sous-verres",
+        category_fr: "Dessous de verre",
         price: 300,
         description: "كوستر بنقشة كلاسيكية مستوحاة من التفاصيل الزخرفية الراقية، يمنح طاولتك حضورًا أنيقًا ولمسة فنية بطابع فاخر يلفت النظر.",
         description_en: "Classic engraved coaster with finely crafted details, adding an elegant artistic touch to your table.",
@@ -184,14 +185,14 @@ const products = [
         image: "8.jpg", 
         dimensions: "20x15x10 سم"
     },
-     {
-        id: 1,
+    {
+        id: 6,
         name: "كوستر بنقشة متموجة",
         name_en: "Luxury Wavy Engraved Coaster",
         name_fr: "Sous-verre de luxe avec gravure ondulée",
         category: "كوسترات",
         category_en: "Coasters",
-        category_fr: "Sous-verres",
+        category_fr: "Dessous de verre",
         price: 300,
         description: "كوستر بنقشة متموجة مستوحاة من التفاصيل الزخرفية الراقية، يمنح طاولتك حضورًا أنيقًا ولمسة فنية بطابع فاخر يلفت النظر.",
         description_en: "Luxury wavy engraved coaster with finely crafted details, adding an elegant artistic touch to your table.",
@@ -199,14 +200,14 @@ const products = [
         image: "7.jpg",
         dimensions: "20x15x10 سم"
     },
-     {
-        id: 1,
+    {
+        id: 7,
         name: "كوستر مجوهرات أنيق",
         name_en: "Elegant Jewelry Coaster",
         name_fr: "Sous-verre de luxe pour bijoux",
         category: "كوسترات",
         category_en: "Coasters",
-        category_fr: "Sous-verres",
+        category_fr: "Dessous de verre",
         price: 300, 
         description: "كوستر متعدد الاستخدامات مصمم لعرض وترتيب المجوهرات بطريقة أنيقة وعصرية، يضفي لمسة فخامة على طاولتك أو طاولة الزينة.",
         description_en: "An elegant multi-purpose coaster designed to display and organize jewelry in an elegant and modern way, adding a touch of luxury to your table or party table.",
@@ -214,24 +215,26 @@ const products = [
         image: "4.jpg",
         dimensions: "20x15x10 سم"
     },
-        {
-        id: 1,
+    {
+        id: 8,
         name: "كوستر بوجه انثى",
         name_en: "Feminine face coaster",
-        name_fr: "Artistic feminine face coaster",
+        name_fr: "Sous-verre artistique visage féminin",
         category: "كوسترات",
-        category_en: "Jewelry Boxes",
-        category_fr: "Boîtes à bijoux",  
+        category_en: "Coasters",  
+        category_fr: "Dessous de verre",
         price: 300,
         description:"كوستر أنيق بتصميم فني مستوحى من ملامح الوجه الأنثوي بأسلوب مينيمال عصري.",
-        description_en: " An elegant coaster featuring an artistic design inspired by feminine facial features, created in a modern minimalist style.",
+        description_en: "An elegant coaster featuring an artistic design inspired by feminine facial features, created in a modern minimalist style.",
         description_fr: "Un dessous de verre élégant au design artistique inspiré des traits du visage féminin, réalisé dans un style minimaliste moderne",
         image: "1.jpg",
         dimensions: "20x15x10 سم"
     },
+    
+    // مزهريات
     { 
-        id: 3,
-        name: "مزهرية  بيضاء",
+        id: 9,
+        name: "مزهرية بيضاء",
         name_en: "White Vase",
         name_fr: "Vase blanc",
         category: "مزهريات",
@@ -240,76 +243,76 @@ const products = [
         price: 3200,
         description: "مزهرية بيضاء بتصميم بسيط وأنيق. مصنوعة يدوياً مع انتباه للتفاصيل الدقيقة. مثالية لتزيين طاولات المكتب أو غرف المعيشة أو المطبخ. تتسع لـ 5-7 ورود متوسطة الحجم.",
         description_en: "White vase with a simple and elegant design. Handmade with attention to fine details. Perfect for decorating office tables, living rooms, or kitchens. Holds 5-7 medium-sized roses.",
-        description_fr: "Vase blanc avec un design simple et élégant. Fait à la main avec attention aux détails fins. Parfait pour décorer les tables de bureau, les salons أو les cuisines. Contient 5-7 roses de taille moyenne.",
+        description_fr: "Vase blanc avec un design simple et élégant. Fait à la main avec attention aux détails fins. Parfait pour décorer les tables de bureau, les salons ou les cuisines. Contient 5-7 roses de taille moyenne.",
         image: "888.jpg",
         height: "25 سم"
     },
+    
+    // توزيعات حفلات وأعراس - IDs من 10 إلى 14
     {
-        id: 4,
+        id: 10,
         name: "كوستر تقديم فاخر للعرس والخطوبة",
         name_en: "Luxury Wedding and Engagement Coaster",
         name_fr: "Sous-verre de luxe pour mariage et engagement",
         category: "توزيعات حفلات وأعراس",
         category_en: "Party and Wedding Favors",
-        category_fr: "Faveurs de fête d'anniversaire",
+        category_fr: "Faveurs de fête et de mariage",
         price: 900,
         description: "كوستر ديكوري أنيق مخصّص لحمل خواتم العروسين، مثالي لتزيين طاولة العرس أو الخطوبة، مع إمكانية تخصيصه بالأسماء والتاريخ ليكون تذكارًا راقيًا للمناسبة.",
         description_en: "An elegant decorative coaster specially designed for holding wedding rings, perfect for decorating wedding or engagement tables. It can be customized with names and dates to serve as a memorable keepsake for the occasion.",
         description_fr: "Un sous-verre décoratif élégant conçu spécialement pour accueillir les bagues de mariage, parfait pour décorer les tables de mariage ou d'engagement. Il peut être personnalisé avec des noms et des dates pour servir de souvenir précieux à l'occasion.",
         image: "200.jpg",
-        
     },
-      {
-        id: 4,
+    {
+        id: 11,
         name: "كوستر دائري لديكور الحفلات",
         name_en: "Circular Decorative Coaster",
         name_fr: "Sous-verre décoratif circulaire",
         category: "توزيعات حفلات وأعراس",
         category_en: "Party and Wedding Favors",
-        category_fr: "Faveurs de fête d'anniversaire",
+        category_fr: "Faveurs de fête et de mariage",
         price: 600,
         description: "كوستر دائري ديكوري للكؤوس والسكين، يضفي لمسة أنيقة على طاولة العرس أو الخطوبة.",
         description_en: "An elegant circular decorative coaster for cups and cutlery, adding an elegant touch to wedding or engagement tables.",
         description_fr: "Un sous-verre décoratif circulaire élégant pour tasses et couverts, ajoutant une touche élégante aux tables de mariage ou d'engagement.",
         image: "201.jpg",
     },
-     {
-        id: 4,
+    {
+        id: 12,
         name: "حامل خواتم مع كوستر للعروسين",
         name_en: "Ring Holder with Coaster for the Bride and Groom",
         name_fr: "Support de bagues avec sous-verre pour la mariée et le marié",
         category: "توزيعات حفلات وأعراس",
         category_en: "Party and Wedding Favors",
-        category_fr: "Faveurs de fête d'anniversaire",
+        category_fr: "Faveurs de fête et de mariage",
         price: 1000,
         description: "كوستر ديكوري أنيق مخصّص لحمل خواتم العروسين، مثالي لتزيين طاولة العرس أو الخطوبة، مع إمكانية تخصيصه بالأسماء والتاريخ ليكون تذكارًا راقيًا للمناسبة.",
         description_en: "An elegant decorative coaster specially designed for holding wedding rings, perfect for decorating wedding or engagement tables. It can be customized with names and dates to serve as a memorable keepsake for the occasion.",
         description_fr: "Un sous-verre décoratif élégant conçu spécialement pour accueillir les bagues de mariage, parfait pour décorer les tables de mariage ou d'engagement. Il peut être personnalisé avec des noms et des dates pour servir de souvenir précieux à l'occasion.",
         image: "202.jpg",
     },
-     {
-        id: 4,
+    {
+        id: 13,
         name: "إطار ديكوري بكتابة حسب الطلب",
         name_en: "Custom Decorative Frame",
         name_fr: "Cadre décoratif personnalisé",
         category: "توزيعات حفلات وأعراس",
         category_en: "Party and Wedding Favors",
-        category_fr: "Faveurs de fête d'anniversaire",
+        category_fr: "Faveurs de fête et de mariage",
         price: 400,
         description: "لوحة ديكورية أنيقة تُكتب عليها أسماء حسب الطلب، تُستخدم كقطعة تزيين أو توزيعة مميّزة للعرس والخطوبة، تضيف لمسة فخامة وخصوصية للمناسبة.",
         description_en: "An elegant decorative panel with customizable names, used as a decorative piece or special wedding favor. Adds a touch of elegance and personalization to wedding or engagement tables.",
         description_fr: "Un panneau décoratif élégant sur lequel les noms peuvent être personnalisés, utilisé comme pièce décorative ou faveur spéciale pour les mariages et les fiançailles. Ajoute une touche d'élégance et de personnalisation aux tables de mariage ou d'engagement.",
         image: "111.jpg",
-  
     },
-     {
-        id: 4,
+    {
+        id: 14,
         name: "اطار ديكوري مع كوستر دائري",
         name_en: "Decorative Frame with Circular Coaster",
         name_fr: "Cadre décoratif avec sous-verre circulaire",
-                category: "توزيعات حفلات وأعراس",
+        category: "توزيعات حفلات وأعراس",
         category_en: "Party and Wedding Favors",
-        category_fr: "Faveurs de fête d'anniversaire",
+        category_fr: "Faveurs de fête et de mariage",
         price: 400,
         description: "لوحة ديكورية أنيقة تُكتب عليها أسماء حسب الطلب، تُستخدم كقطعة تزيين أو توزيعة مميّزة للعرس والخطوبة، تضيف لمسة فخامة وخصوصية للمناسبة.",
         description_en: "An elegant decorative panel with customizable names, used as a decorative piece or special wedding favor. Adds a touch of elegance and personalization to wedding or engagement tables.",
@@ -317,92 +320,95 @@ const products = [
         image: "119.jpg",
     },
     
+    // مباخر فاخرة - IDs من 15 إلى 20
     {
-        id: 2,
+        id: 15,
         name: "مَبخَرَة بخور فاخرة",
         name_en: "Luxury Incense Box",
         name_fr: "Boîte d'encens de luxe",
         category: "مباخر فاخرة",
-        category_en: "Luxury Incense",
-        category_fr: "Encens de luxe",
+        category_en: "Luxury incense burners",
+        category_fr: "Brûleurs d’encens raffinés",
         price: 650,
         description: "مَبخَرَة أنيقة مخصّصة لاستخدام البخور، بتصميم عصري يضفي لمسة فاخرة على المكان وينشر رائحة زكية تدوم. مناسبة للاستعمال اليومي وللهدايا والمناسبات.",
         description_en: "An elegant incense box designed for burning incense, with a modern design that adds a luxurious touch to the space and spreads a lasting fragrance. Suitable for daily use, gifts, and special occasions.",
         description_fr: "Une boîte d'encens élégante conçue pour brûler de l'encens, avec un design moderne qui ajoute une touche de luxe à l'espace et diffuse un parfum durable. Convient pour une utilisation quotidienne, les cadeaux et les occasions spéciales.",
         image: "20.jpg",
     },
-      {
-        id: 2,
+    {
+        id: 16,
         name: "مَبخَرَة بخور عصرية",
         name_en: "Modern Incense Box",
         name_fr: "Boîte d'encens moderne",
         category: "مباخر فاخرة",
-        category_en: "Luxury Incense",
-        category_fr: "Encens de luxe",
+        category_en: "Luxury incense burners",
+        category_fr: "Brûleurs d’encens raffinés",
         price: 300,
-        description: "َبخَرَة صغيرة بتصميم عصري، مثالية لتعطير المكان بالبخور وإضافة لمسة أنيقة للديكور.",
+        description: "مَبخَرَة صغيرة بتصميم عصري، مثالية لتعطير المكان بالبخور وإضافة لمسة أنيقة للديكور.",
         description_en: "An elegant modern incense box designed for burning incense, with a contemporary design that adds an elegant touch to the space and spreads a lasting fragrance.",
         description_fr: "Une boîte d'encens moderne élégante conçue pour brûler de l'encens, avec un design contemporain qui ajoute une touche élégante à l'espace et diffuse un parfum durable.",
         image: "76.jpg",
     },
-      {
-        id: 2,
+    {
+        id: 17,
         name: "مَبخَرَة بخور صغيرة ديكورية",
         name_en: "Small Decorative Incense Box",
         name_fr: "Boîte d'encens décorative",
         category: "مباخر فاخرة",
-        category_en: "Luxury Incense",
-        category_fr: "Encens de luxe",
+        category_en: "Luxury incense burners",
+        category_fr: "Brûleurs d’encens raffinés",
         price: 400,
         description: "مَبخَرَة صغيرة مُصمَّمة بتصميم ديكوري أنيق، مثالية لتعطير المكان بالبخور وإضافة لمسة فاخرة للديكور.",
         description_en: "A small incense box designed with an elegant decorative design, perfect for scenting the space with incense and adding a luxurious touch to the decor.",
         description_fr: "Une petite boîte d'encens conçue avec un design décoratif élégant, parfaite pour parfumer l'espace avec de l'encens et ajouter une touche de luxe à la décoration.",
         image: "100.jpg",
     },
-      {
-        id: 2,
+    {
+        id: 18,
         name: "مَبخَرَة بخور أنيقة",
         name_en: "Elegant Incense Box",
         name_fr: "Boîte d'encens élégante",
         category: "مباخر فاخرة",
-        category_en: "Luxury Incense",
-        category_fr: "Encens de luxe",
+        category_en: "Luxury incense burners",
+        category_fr: "Brûleurs d’encens raffinés",
         price: 500,
         description: "مَبخَرَة أنيقة مخصّصة لاستخدام البخور، بتصميم عصري يضفي لمسة فاخرة على المكان وينشر رائحة زكية تدوم. مناسبة للاستعمال اليومي وللهدايا والمناسبات.",
         description_en: "An elegant incense box designed for burning incense, with a modern design that adds a luxurious touch to the space and spreads a lasting fragrance. Suitable for daily use, gifts, and special occasions.",
         description_fr: "Une boîte d'encens élégante conçue pour brûler de l'encens, avec un design moderne qui ajoute une touche de luxe à l'espace et diffuse un parfum durable. Convient pour une utilisation quotidienne, les cadeaux et les occasions spéciales.",
         image: "21.jpg",
     },
-      {
-        id: 2,
+    {
+        id: 19,
         name: "مَبخَرَة وردة",
         name_en: "Rose Incense Box",
         name_fr: "Boîte d'encens à la rose",
         category: "مباخر فاخرة",
-        category_en: "Luxury Incense",
-        category_fr: "Encens de luxe",
+        category_en: "Luxury incense burners",
+        category_fr: "Brûleurs d’encens raffinés",
         price: 400,
         description: "مَبخَرَة صغيرة بتصميم وردة أنيقة، مثالية لتعطير المكان بالبخور وإضافة لمسة أنثوية راقية للديكور.",
         description_en: "An elegant rose-shaped incense box, perfect for scenting the space with incense and adding a refined feminine touch to the decor.",
         description_fr: "Une petite boîte d'encens conçue avec un design de rose élégant, parfaite pour parfumer l'espace avec de l'encens et ajouter une touche féminine raffinée à la décoration.",
         image: "16.jpg",
     },
-      {
-        id: 2,
+    {
+        id: 20,
         name: "مَبخَرَة بخور يومية",
         name_en: "Daily Incense Box",
         name_fr: "Boîte d'encens quotidienne",
         category: "مباخر فاخرة",
-        category_en: "Luxury Incense",
-        category_fr: "Encens de luxe",
+        category_en: "Luxury incense burners",
+        category_fr: "Brûleurs d’encens raffinés",
         price: 500,
         description: "مَبخَرَة أنيقة مع إمكانية الطباعة حسب الطلب (اسم، عبارة أو تصميم)، مثالية للهدايا ولمسة فخامة للمكان.",
         description_en: "An elegant incense box with customizable printing (name, phrase, or design), perfect for gifts and adding a touch of luxury to any space.",
         description_fr: "Une boîte d'encens élégante avec impression personnalisée (nom, phrase ou design), parfaite pour les cadeaux et ajoutant une touche de luxe à n'importe quel espace.",
         image: "14.jpg",
     },
+    
+    // علبة ديكور فاخرة
     {
-        id: 6,
+        id: 21,
         name: "علبة مجوهرات",
         name_en: "Black Jewelry Box",
         name_fr: "Boîte à bijoux noire",
@@ -415,12 +421,14 @@ const products = [
         description_fr: "Boîte à bijoux noire élégante avec impression dorée. Contient plusieurs sections pour différents bijoux avec des coussins spéciaux pour les bagues et les boucles d'oreilles. Se ferme hermétiquement pour protéger les bijoux de la poussière.",
         image: "91.jpg",
     },
+    
+    // حامل شموع
     {
-        id: 7,
+        id: 22,
         name: "حامل شموع",
         name_en: "Metal Candle Holder",
         name_fr: "Porte-bougie métallique",
-        category: "حامل الشموع",
+        category: "حامل شموع",
         category_en: "Candle Holders",
         category_fr: "Porte-bougies",
         price: 2200,
@@ -430,7 +438,6 @@ const products = [
         image: "206.jpg",
         material: "فولاذ مقاوم للصدأ"
     },
-   
 ];
 
 const algerianStates = [
@@ -620,7 +627,7 @@ const algerianStates = [
         homeDelivery: 500,
         officeDelivery: 900
     },
-    // ✅ الولايات الجديدة المطلوبة
+    // الولايات الجديدة
     { 
         name: "برج بوعريريج", 
         municipalities: ["برج بوعريريج", "رأس الوادي", "برج زمورة", "الياشير", "جعافرة", "الحمادية", "القصور", "عين تاغروت", "تسامرت", "بئر قاصد علي", "المهير", "أولاد دحمان", "أولاد سيدي ابراهيم", "سيدي أمبارك", "تقلعيت", "ثنية النصر", "حرازة", "مجانة", "الماين", "العش", "الجعافرة", "أولاد تبان"],
@@ -943,25 +950,20 @@ const translations = {
 let domElements = {};
 
 // ============================================
-// 🔢 دوال ترقيم الطلبات التسلسلية (المضافة حديثاً)
+// 🔢 دوال ترقيم الطلبات التسلسلية
 // ============================================
 
 // دالة للحصول على رقم الطلب التالي
 async function getNextOrderNumber() {
     try {
-        // نستخدم مرجع للعداد في Firebase
         const counterRef = database.ref('orderCounter');
-        
-        // نجري عملية ذرية لزيادة العداد
         const result = await counterRef.transaction(currentCount => {
             return (currentCount || 0) + 1;
         });
         
-        // إذا نجحت العملية، نرجع الرقم الجديد
         if (result.committed) {
             return result.snapshot.val();
         } else {
-            // إذا فشلت، نستخدم الطريقة البديلة
             const snapshot = await counterRef.once('value');
             const newCount = (snapshot.val() || 0) + 1;
             await counterRef.set(newCount);
@@ -969,15 +971,13 @@ async function getNextOrderNumber() {
         }
     } catch (error) {
         console.error('خطأ في الحصول على رقم الطلب:', error);
-        // إذا فشل كل شيء، نستخدم التاريخ كرقم مؤقت
         return parseInt(Date.now().toString().slice(-6));
     }
 }
 
 // دالة لتنسيق رقم الطلب بشكل جميل
 function formatOrderNumber(num) {
-    return num.toString(); // يمكن تغييرها إلى ORD-0001 إذا أردت
-    // return 'ORD-' + num.toString().padStart(4, '0');
+    return num.toString();
 }
 
 // 🚀 Initialize App
@@ -1140,8 +1140,10 @@ function setupEventListeners() {
     // Cart button
     domElements.cartBtn.addEventListener('click', openCartModal);
     
-    // Favorites button
-    domElements.favoritesBtn.addEventListener('click', showFavoritesPage);
+    // Favorites button - المعدل
+    domElements.favoritesBtn.addEventListener('click', function() {
+        showFavoritesPage();
+    });
     
     // User button
     domElements.userBtn.addEventListener('click', toggleUserDropdown);
@@ -1153,9 +1155,23 @@ function setupEventListeners() {
         }
     });
     
-    // Navigation
+    // Navigation - المعدل لحل مشكلة التنقل
     document.querySelectorAll('nav a').forEach(link => {
-        link.addEventListener('click', handleNavigation);
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            
+            if (targetId === 'favorites') {
+                showFavoritesPage();
+            } else {
+                // إظهار جميع الأقسام ثم التمرير للقسم المطلوب
+                showAllSections();
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                appState.currentView = targetId;
+            }
+            
+            closeMobileMenu();
+        });
     });
     
     // Welcome buttons
@@ -1175,9 +1191,9 @@ function setupEventListeners() {
     
     // Browse favorites button
     document.getElementById('browseFavorites').addEventListener('click', () => {
+        showAllSections();
         document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
         appState.currentView = 'products';
-        updateView();
     });
     
     // Checkout button
@@ -1229,21 +1245,27 @@ function setupEventListeners() {
         }
     });
     
-    // تحديث سعر التوصيل
+    // تحديث سعر التوصيل عند تغيير الولاية
     domElements.checkoutState.addEventListener('change', function() {
         console.log('📍 تغيرت الولاية إلى:', this.value);
+        
+        if (!appState.deliveryType) {
+            appState.deliveryType = 'home';
+        }
+        
         calculateShippingCost();
         updateShippingCostInfo();
         domElements.municipalityInput.value = '';
     });
     
-    // Delivery options selection
+    // تحديث سعر التوصيل عند تغيير نوع التوصيل
     domElements.deliveryOptions.forEach(option => {
         option.addEventListener('click', function() {
             domElements.deliveryOptions.forEach(opt => opt.classList.remove('selected'));
             this.classList.add('selected');
             appState.deliveryType = this.getAttribute('data-type');
             console.log('🚚 تغير نوع التوصيل إلى:', appState.deliveryType);
+            
             calculateShippingCost();
             updateShippingCostInfo();
         });
@@ -1268,11 +1290,11 @@ function setupEventListeners() {
         handleLogout();
     });
     
-    // ✅ إصلاح رابط طلباتي
+    // رابط طلباتي
     document.getElementById('ordersLink').addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('📋 نقر على طلباتي - فقط فتح النافذة');
+        console.log('📋 نقر على طلباتي');
         
         if (!appState.currentUser) {
             showNotification('يرجى تسجيل الدخول لعرض الطلبات السابقة', 'warning');
@@ -1318,6 +1340,17 @@ function setupEventListeners() {
     setupPhoneValidation();
 }
 
+// ✅ دالة جديدة لإظهار جميع الأقسام
+function showAllSections() {
+    const sections = ['home', 'categories', 'products', 'favorites', 'about'];
+    sections.forEach(section => {
+        const element = document.getElementById(section);
+        if (element) {
+            element.style.display = 'block';
+        }
+    });
+}
+
 function toggleDarkMode() {
     const isDarkMode = document.getElementById('switch').checked;
     if (isDarkMode) {
@@ -1339,28 +1372,6 @@ function closeMobileMenu() {
 
 function toggleUserDropdown() {
     domElements.userDropdown.classList.toggle('active');
-}
-
-function handleNavigation(e) {
-    e.preventDefault();
-    const targetId = this.getAttribute('href').substring(1);
-    
-    if (targetId === 'favorites') {
-        appState.currentView = 'favorites';
-        updateView();
-    } else if (targetId === 'orders') {
-        if (!appState.currentUser) {
-            showNotification('يرجى تسجيل الدخول لعرض الطلبات السابقة', 'warning');
-            openAuthModal();
-        } else {
-            openModal('userOrdersModal');
-        }
-    } else {
-        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-        appState.currentView = targetId;
-    }
-    
-    closeMobileMenu();
 }
 
 function renderCategories() {
@@ -1505,7 +1516,9 @@ function renderProducts() {
     });
 }
 
+// ✅ دالة عرض المفضلة - المعدلة
 function renderFavorites() {
+    console.log('عرض المنتجات المفضلة:', appState.favorites);
     domElements.favoritesContainer.innerHTML = '';
     
     if (appState.favorites.length === 0) {
@@ -1618,8 +1631,6 @@ function updateCartItemQuantity(productId, newQuantity) {
 function updateCartCount() {
     const totalItems = appState.cart.reduce((sum, item) => sum + item.quantity, 0);
     domElements.cartCount.textContent = totalItems;
-    
-    // تحديث عداد السلة في الجوال
     updateMobileCartCount();
 }
 
@@ -1639,17 +1650,17 @@ function toggleFavorite(product) {
     saveState();
     updateFavoritesCount();
     
+    // تحديث عرض المفضلة إذا كنا في صفحة المفضلة
     if (appState.currentView === 'favorites') {
         renderFavorites();
     } else {
+        // تحديث عرض المنتجات لتغيير لون قلب المفضلة
         renderProducts();
     }
 }
 
 function updateFavoritesCount() {
     domElements.favoritesCount.textContent = appState.favorites.length;
-    
-    // تحديث عداد المفضلة في الجوال
     updateMobileFavoritesCount();
 }
 
@@ -1746,39 +1757,90 @@ function openCheckoutModal() {
         return;
     }
     
+    appState.deliveryPrice = null;
+    
     if (appState.currentUser) {
         document.getElementById('checkoutName').value = appState.currentUser.displayName || '';
         document.getElementById('checkoutPhone').value = appState.currentUser.phone || '';
     }
     
-    // حساب سعر التوصيل عند فتح النافذة
-    calculateShippingCost();
     updateShippingCostInfo();
     
     closeModal('cartModal');
     openModal('checkoutModal');
 }
 
+function calculateShippingCost() {
+    const selectedStateName = domElements.checkoutState.value;
+    
+    if (!selectedStateName) {
+        appState.deliveryPrice = null;
+        console.log('💰 لم يتم اختيار ولاية بعد - سعر التوصيل فارغ');
+        return null;
+    }
+    
+    const selectedState = algerianStates.find(state => state.name === selectedStateName);
+    
+    if (selectedState) {
+        appState.deliveryPrice = appState.deliveryType === 'home' ? 
+            selectedState.homeDelivery : selectedState.officeDelivery;
+        
+        console.log('💰 سعر التوصيل المحسوب:', appState.deliveryPrice, 
+                   'للولاية:', selectedStateName, 
+                   'نوع التوصيل:', appState.deliveryType === 'home' ? 'توصيل للمنزل' : 'توصيل للمكتب');
+        
+        return appState.deliveryPrice;
+    } else {
+        appState.deliveryPrice = null;
+        console.log('⚠️ الولاية غير موجودة في قاعدة البيانات');
+        return null;
+    }
+}
+
 function updateShippingCostInfo() {
     const selectedStateName = domElements.checkoutState.value;
     const selectedState = algerianStates.find(state => state.name === selectedStateName);
     
-    if (selectedState) {
-        const deliveryTypeText = appState.deliveryType === 'home' ? 
-            (translations[appState.currentLanguage]?.checkout?.homeDelivery || 'توصيل للمنزل') : 
-            (translations[appState.currentLanguage]?.checkout?.officeDelivery || 'توصيل للمكتب');
-        
-        const shippingCost = appState.deliveryType === 'home' ? 
-            selectedState.homeDelivery : selectedState.officeDelivery;
-        
+    if (!selectedStateName) {
         domElements.shippingCostInfo.innerHTML = `
-            <strong>${translations[appState.currentLanguage]?.checkout?.deliveryType || 'نوع التوصيل'}:</strong> ${deliveryTypeText}<br>
-            <strong>${translations[appState.currentLanguage]?.checkout?.state || 'الولاية'}:</strong> ${selectedStateName}<br>
-            <strong>سعر التوصيل:</strong> ${shippingCost} دينار جزائري
+            <div style="color: #666; text-align: center; padding: 10px;">
+                <i class="fas fa-info-circle" style="color: var(--dark-green); margin-left: 5px;"></i>
+                ${translations[appState.currentLanguage]?.checkout?.selectState || 'يرجى اختيار الولاية أولاً'}
+            </div>
+        `;
+        return;
+    }
+    
+    const deliveryTypeText = appState.deliveryType === 'home' ? 
+        (translations[appState.currentLanguage]?.checkout?.homeDelivery || 'توصيل للمنزل') : 
+        (translations[appState.currentLanguage]?.checkout?.officeDelivery || 'توصيل للمكتب');
+    
+    const shippingCost = calculateShippingCost();
+    
+    if (shippingCost) {
+        domElements.shippingCostInfo.innerHTML = `
+            <div style="padding: 10px; background: var(--light-green); border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <strong style="color: var(--dark-green);">${translations[appState.currentLanguage]?.checkout?.deliveryType || 'نوع التوصيل'}:</strong>
+                    <span>${deliveryTypeText}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <strong style="color: var(--dark-green);">${translations[appState.currentLanguage]?.checkout?.state || 'الولاية'}:</strong>
+                    <span>${selectedStateName}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; color: var(--brown); margin-top: 8px; border-top: 1px solid #ddd; padding-top: 8px;">
+                    <span>سعر التوصيل:</span>
+                    <span>${shippingCost} د.ج</span>
+                </div>
+            </div>
         `;
     } else {
-        domElements.shippingCostInfo.textContent = 
-            translations[appState.currentLanguage]?.checkout?.selectState || 'يرجى اختيار الولاية لعرض سعر التوصيل';
+        domElements.shippingCostInfo.innerHTML = `
+            <div style="color: #ff6b6b; text-align: center; padding: 10px;">
+                <i class="fas fa-exclamation-triangle"></i>
+                حدث خطأ في حساب سعر التوصيل
+            </div>
+        `;
     }
 }
 
@@ -1854,7 +1916,7 @@ function checkAuthState() {
             document.getElementById('ordersLink').style.display = 'block';
             document.getElementById('logoutLink').style.display = 'block';
             
-            console.log('👤 تم تسجيل الدخول - الطلبات لن تحمل تلقائياً');
+            console.log('👤 تم تسجيل الدخول');
             
         } else {
             appState.currentUser = null;
@@ -2059,10 +2121,8 @@ function setupMobileNavigation() {
         mobileUserBtn.addEventListener('click', function(e) {
             e.preventDefault();
             if (appState.currentUser) {
-                // إذا كان المستخدم مسجل دخوله، نفتح القائمة
                 domElements.userDropdown.classList.toggle('active');
             } else {
-                // إذا لم يكن مسجل، نفتح نافذة التسجيل
                 openAuthModal();
             }
         });
@@ -2077,7 +2137,7 @@ function setupMobileNavigation() {
         });
     }
     
-    // روابط التنقل
+    // روابط التنقل في الجوال
     document.querySelectorAll('.bottom-nav a').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -2086,17 +2146,12 @@ function setupMobileNavigation() {
                 const targetId = href.substring(1);
                 const targetElement = document.getElementById(targetId);
                 if (targetElement) {
+                    showAllSections();
                     targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
                 
-                // تحديث الحالة إذا كانت المفضلة
                 if (targetId === 'favorites') {
-                    appState.currentView = 'favorites';
-                    updateView();
-                    renderFavorites();
-                } else {
-                    appState.currentView = targetId;
-                    updateView();
+                    showFavoritesPage();
                 }
             }
         });
@@ -2104,10 +2159,9 @@ function setupMobileNavigation() {
 }
 
 // ============================================
-// 🆕 دالة عرض رسالة الشكر باللون الأخضر الفاتح
+// 🆕 دالة عرض رسالة الشكر
 // ============================================
 function showThankYouMessage(order) {
-    // إنشاء عنصر الرسالة
     const thankYouMessage = document.createElement('div');
     thankYouMessage.id = 'thankYouMessage';
     thankYouMessage.style.cssText = `
@@ -2130,7 +2184,6 @@ function showThankYouMessage(order) {
         width: 400px;
     `;
 
-    // تنسيق الرسالة باللون الأخضر الفاتح
     thankYouMessage.innerHTML = `
         <i class="fas fa-check-circle" style="font-size: 60px; color: #ffffff; margin-bottom: 15px;"></i>
         <h3 style="color: #ffffff; font-size: 28px; margin: 10px 0; font-weight: 700;">شكراً على طلبك!</h3>
@@ -2168,7 +2221,6 @@ function showThankYouMessage(order) {
         </div>
     `;
 
-    // إضافة تأثيرات CSS
     const style = document.createElement('style');
     style.textContent = `
         @keyframes slideIn {
@@ -2195,14 +2247,10 @@ function showThankYouMessage(order) {
     `;
     document.head.appendChild(style);
 
-    // إزالة أي رسالة سابقة
     const oldMessage = document.getElementById('thankYouMessage');
     if (oldMessage) oldMessage.remove();
 
-    // إضافة الرسالة للصفحة
     document.body.appendChild(thankYouMessage);
-
-    // تم إزالة الإغلاق التلقائي - الرسالة تبقى حتى يضغط المستخدم على زر تم
 }
 
 // دالة إغلاق رسالة الشكر
@@ -2214,7 +2262,7 @@ function closeThankYouMessage() {
     }
 }
 
-// 🧾 دالة إنشاء الإيصال (بدون باركود)
+// 🧾 دالة إنشاء الإيصال
 function generateReceipt(order) {
     const now = new Date();
     const dateStr = now.toLocaleDateString('ar-EG');
@@ -2235,7 +2283,6 @@ function generateReceipt(order) {
         `;
     });
     
-    // 🔥 الإيصال بدون باركود
     const receiptHTML = `
         <div id="receiptPopup" style="
             position: fixed;
@@ -2341,15 +2388,11 @@ function generateReceipt(order) {
         </div>
     `;
     
-    // إنشاء عنصر الإيصال وإضافته مباشرة للصفحة
     const receiptPopup = document.createElement('div');
     receiptPopup.id = 'receiptPopupContainer';
     receiptPopup.innerHTML = receiptHTML;
     
-    // إضافة الإيصال مباشرة إلى body بدون نافذة خلفية
     document.body.appendChild(receiptPopup);
-    
-    // إخفاء scrollbar للصفحة الرئيسية
     document.body.style.overflow = 'hidden';
 }
 
@@ -2365,7 +2408,7 @@ function printReceipt() {
         <!DOCTYPE html>
         <html dir="rtl">
         <head>
-            <title>إيصال الطلب - ${appState.currentLanguage === 'ar' ? 'Glowvi Angel' : 'Glowvi Angel'}</title>
+            <title>إيصال الطلب - Glowvi Angel</title>
             <meta charset="UTF-8">
             <style>
                 @media print {
@@ -2455,19 +2498,22 @@ async function handleCheckout(e) {
             return;
         }
         
-        // التأكد من حساب سعر التوصيل بشكل صحيح
-        calculateShippingCost();
-        console.log('📦 سعر التوصيل النهائي:', appState.deliveryPrice);
+        const shipping = calculateShippingCost();
+        
+        if (!shipping) {
+            showNotification('يرجى اختيار الولاية أولاً', 'warning');
+            showLoading(false);
+            return;
+        }
+        
+        console.log('📦 سعر التوصيل النهائي:', shipping);
         
         const subtotal = appState.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const shipping = appState.deliveryPrice;
         const total = subtotal + shipping;
         
-        // الحصول على رقم الطلب التسلسلي
         const orderNumberValue = await getNextOrderNumber();
         const orderNumber = formatOrderNumber(orderNumberValue);
         
-        // ✅ إنشاء كائن الطلب بدون إيميل
         const order = {
             customerName: document.getElementById('checkoutName').value,
             phone: document.getElementById('checkoutPhone').value,
@@ -2523,7 +2569,6 @@ async function handleCheckout(e) {
         updateCartCount();
         closeModal('checkoutModal');
         
-        // عرض رسالة الشكر والإيصال
         setTimeout(() => {
             showThankYouMessage(order);
             generateReceipt(order);
@@ -2543,7 +2588,6 @@ async function sendOrderNotificationToStoreOwner(order) {
             `${index + 1}. ${item.name}\n   الكمية: ${item.quantity}\n   السعر: ${item.price} د.ج\n   الإجمالي: ${item.price * item.quantity} د.ج`
         ).join('\n\n');
         
-        // ✅ إزالة customer_email من البيانات المرسلة
         const emailData = {
             order_number: order.orderNumber,
             order_date: new Date(order.createdAt).toLocaleDateString('ar-EG'),
@@ -2782,26 +2826,6 @@ function loadAlgerianStates() {
     });
 }
 
-// ============================================
-// 💰 دالة حساب سعر التوصيل - المعدلة
-// ============================================
-function calculateShippingCost() {
-    const selectedStateName = domElements.checkoutState.value;
-    const selectedState = algerianStates.find(state => state.name === selectedStateName);
-    
-    if (selectedState) {
-        appState.deliveryPrice = appState.deliveryType === 'home' ? 
-            selectedState.homeDelivery : selectedState.officeDelivery;
-        console.log('💰 سعر التوصيل المحسوب:', appState.deliveryPrice, 'للولاية:', selectedStateName, 'نوع التوصيل:', appState.deliveryType);
-    } else {
-        // قيمة افتراضية إذا لم يتم اختيار ولاية
-        appState.deliveryPrice = appState.deliveryType === 'home' ? 400 : 600;
-        console.log('💰 سعر التوصيل الافتراضي:', appState.deliveryPrice);
-    }
-    
-    return appState.deliveryPrice;
-}
-
 function openModal(modalId) {
     document.getElementById(modalId).style.display = 'block';
     document.body.style.overflow = 'hidden';
@@ -2831,20 +2855,43 @@ function showLoading(show) {
     else domElements.loading.classList.remove('active');
 }
 
+// ✅ دالة عرض صفحة المفضلة - المعدلة
 function showFavoritesPage() {
-    appState.currentView = 'favorites';
-    updateView();
+    console.log('عرض صفحة المفضلة');
+    
+    // إظهار جميع الأقسام أولاً
+    showAllSections();
+    
+    // إخفاء الأقسام الأخرى
+    document.getElementById('home').style.display = 'none';
+    document.getElementById('categories').style.display = 'none';
+    document.getElementById('products').style.display = 'none';
+    document.getElementById('about').style.display = 'none';
+    
+    // إظهار قسم المفضلة
+    const favoritesSection = document.getElementById('favorites');
+    favoritesSection.style.display = 'block';
+    
+    // عرض المنتجات المفضلة
     renderFavorites();
+    
+    // التمرير إلى قسم المفضلة
+    favoritesSection.scrollIntoView({ behavior: 'smooth' });
+    
+    appState.currentView = 'favorites';
 }
 
 function updateView() {
     const sections = ['home', 'categories', 'products', 'favorites', 'about'];
     sections.forEach(section => {
-        document.getElementById(section).style.display = 
-            appState.currentView === section ? 'block' : 'none';
+        const element = document.getElementById(section);
+        if (element) {
+            element.style.display = appState.currentView === section ? 'block' : 'none';
+        }
     });
     
     if (appState.currentView === 'favorites') {
+        renderFavorites();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
@@ -2859,4 +2906,4 @@ async function handleLogout() {
     }
 }
 
-console.log(`✅ تم تحميل الكود بنجاح مع حذف الباركود وإزالة الإيميل وإلغاء الإغلاق التلقائي`);
+console.log(`✅ تم تحميل الكود بنجاح مع حل مشاكل التنقل والمفضلة`);
