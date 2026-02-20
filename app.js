@@ -35,12 +35,13 @@ const appState = {
     favorites: [],
     currentUser: null,
     currentFilter: "all",
-    currentView: "home", // الصفحة الحالية (home, categories, products, favorites, about)
+    currentView: "home",
     currentLanguage: "ar",
     deliveryType: "home",
     deliveryPrice: null,
     lastOrder: null,
-    userOrders: []
+    userOrders: [],
+    previousViews: [] // ✅ مصفوفة لتخزين الصفحات السابقة
 };
 
 // 📦 Categories Data
@@ -787,6 +788,12 @@ const translations = {
         "nav.register": "إنشاء حساب",
         "nav.orders": "طلباتي",
         "nav.logout": "تسجيل الخروج",
+        "auth.forgotPassword": "نسيت كلمة السر؟",
+        "auth.resetPassword": "إعادة تعيين كلمة السر",
+        "auth.resetEmailSent": "تم إرسال رابط إعادة تعيين كلمة السر إلى بريدك الإلكتروني",
+        "auth.enterEmail": "أدخل بريدك الإلكتروني",
+        "auth.sendResetLink": "إرسال رابط إعادة التعيين",
+        "auth.backToLogin": "العودة لتسجيل الدخول",
         
         "welcome.title": "مرحباً بكم في عالم الديكور",
         "welcome.description": "اكتشفوا تشكيلتنا الفريدة من الديكورات المصممة بعناية لتضفي جمالاً ودفئاً على منزلكم.",
@@ -845,6 +852,12 @@ const translations = {
         "nav.register": "Register",
         "nav.orders": "My Orders",
         "nav.logout": "Logout",
+        "auth.forgotPassword": "Forgot Password?",
+        "auth.resetPassword": "Reset Password",
+        "auth.resetEmailSent": "Password reset link has been sent to your email",
+        "auth.enterEmail": "Enter your email",
+        "auth.sendResetLink": "Send Reset Link",
+        "auth.backToLogin": "Back to Login",
         
         "welcome.title": "Welcome to the World of Decorations",
         "welcome.description": "Discover our unique collection of decorations designed carefully to add beauty and warmth to your home.",
@@ -900,6 +913,12 @@ const translations = {
         "nav.register": "Créer un compte",
         "nav.orders": "Mes commandes",
         "nav.logout": "Déconnexion",
+        "auth.forgotPassword": "Mot de passe oublié?",
+        "auth.resetPassword": "Réinitialiser le mot de passe",
+        "auth.resetEmailSent": "Le lien de réinitialisation a été envoyé à votre email",
+        "auth.enterEmail": "Entrez votre email",
+        "auth.sendResetLink": "Envoyer le lien",
+        "auth.backToLogin": "Retour à la connexion",
         
         "welcome.title": "Bienvenue dans le monde des décorations",
         "welcome.description": "Découvrez notre collection unique de décorations conçus avec soin pour ajouter beauté et chaleur à votre maison.",
@@ -984,6 +1003,9 @@ function formatOrderNumber(num) {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 بدء تشغيل المتجر...');
     initApp();
+    
+    // ✅ إضافة دعم أزرار المتصفح
+    setupBrowserNavigation();
 });
 
 function initApp() {
@@ -1049,7 +1071,10 @@ function cacheDOMElements() {
         homeDeliveryPrice: document.getElementById('homeDeliveryPrice'),
         officeDeliveryPrice: document.getElementById('officeDeliveryPrice'),
         emailOrderDetails: document.getElementById('emailOrderDetails'),
-        receiptContent: document.getElementById('receiptContent')
+        receiptContent: document.getElementById('receiptContent'),
+        forgotPasswordLink: document.getElementById('forgotPasswordLink'),
+        resetPasswordForm: document.getElementById('resetPasswordForm'),
+        backToLoginBtn: document.getElementById('backToLoginBtn')
     };
 }
 
@@ -1077,6 +1102,38 @@ function saveState() {
     } catch (error) {
         console.error('خطأ في حفظ البيانات:', error);
     }
+}
+
+// ✅ دالة إعداد دعم أزرار المتصفح
+function setupBrowserNavigation() {
+    // إضافة الصفحة الحالية إلى التاريخ عند تحميل الصفحة
+    history.replaceState({ view: 'home' }, '', window.location.pathname);
+    
+    // الاستماع لأحداث التغيير في التاريخ (أزرار المتصفح)
+    window.addEventListener('popstate', function(event) {
+        console.log('🔄 تغيير في التاريخ:', event.state);
+        
+        if (event.state && event.state.view) {
+            // العودة إلى الصفحة المخزنة في التاريخ
+            if (event.state.view === 'favorites') {
+                showFavoritesPage(false); // لا نضيف للتاريخ مرة أخرى
+            } else {
+                showAllSections();
+                appState.currentView = event.state.view;
+            }
+        } else {
+            // إذا لم يكن هناك حالة، نذهب للرئيسية
+            showAllSections();
+            appState.currentView = 'home';
+        }
+    });
+}
+
+// ✅ دالة لإضافة صفحة إلى التاريخ
+function addToHistory(view) {
+    appState.previousViews.push(appState.currentView);
+    history.pushState({ view: view }, '', window.location.pathname);
+    appState.currentView = view;
 }
 
 function initializeLanguage() {
@@ -1140,7 +1197,7 @@ function setupEventListeners() {
     // Cart button
     domElements.cartBtn.addEventListener('click', openCartModal);
     
-    // Favorites button - المعدل
+    // Favorites button
     domElements.favoritesBtn.addEventListener('click', function() {
         showFavoritesPage();
     });
@@ -1155,7 +1212,7 @@ function setupEventListeners() {
         }
     });
     
-    // Navigation - المعدل لحل مشكلة التنقل
+    // Navigation - مع دعم التاريخ
     document.querySelectorAll('nav a').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -1164,10 +1221,9 @@ function setupEventListeners() {
             if (targetId === 'favorites') {
                 showFavoritesPage();
             } else {
-                // إظهار جميع الأقسام ثم التمرير للقسم المطلوب
                 showAllSections();
                 document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-                appState.currentView = targetId;
+                addToHistory(targetId);
             }
             
             closeMobileMenu();
@@ -1177,16 +1233,19 @@ function setupEventListeners() {
     // Welcome buttons
     document.getElementById('exploreProducts').addEventListener('click', () => {
         document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        addToHistory('products');
     });
     
     document.getElementById('learnMore').addEventListener('click', () => {
         document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+        addToHistory('about');
     });
     
     // Browse products button
     document.getElementById('browseProducts').addEventListener('click', () => {
         closeModal('cartModal');
         document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        addToHistory('products');
     });
     
     // Browse favorites button
@@ -1194,6 +1253,7 @@ function setupEventListeners() {
         showAllSections();
         document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
         appState.currentView = 'products';
+        addToHistory('products');
     });
     
     // Checkout button
@@ -1225,6 +1285,25 @@ function setupEventListeners() {
     // Auth forms
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
     document.getElementById('registerForm').addEventListener('submit', handleRegister);
+    
+    // ✅ نسيت كلمة السر
+    if (domElements.forgotPasswordLink) {
+        domElements.forgotPasswordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showResetPasswordForm();
+        });
+    }
+    
+    if (domElements.backToLoginBtn) {
+        domElements.backToLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showLoginForm();
+        });
+    }
+    
+    if (domElements.resetPasswordForm) {
+        domElements.resetPasswordForm.addEventListener('submit', handleResetPassword);
+    }
     
     // Checkout form
     document.getElementById('checkoutForm').addEventListener('submit', handleCheckout);
@@ -1340,6 +1419,58 @@ function setupEventListeners() {
     setupPhoneValidation();
 }
 
+// ✅ دوال نسيت كلمة السر
+function showResetPasswordForm() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('resetPasswordForm').style.display = 'block';
+    document.querySelector('.auth-tabs').style.display = 'none';
+}
+
+function showLoginForm() {
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('resetPasswordForm').style.display = 'none';
+    document.querySelector('.auth-tabs').style.display = 'flex';
+}
+
+async function handleResetPassword(e) {
+    e.preventDefault();
+    showLoading(true);
+    
+    const email = document.getElementById('resetEmail').value;
+    
+    if (!email) {
+        showNotification('يرجى إدخال البريد الإلكتروني', 'warning');
+        showLoading(false);
+        return;
+    }
+    
+    try {
+        await auth.sendPasswordResetEmail(email);
+        showNotification(translations[appState.currentLanguage]['auth.resetEmailSent'], 'success');
+        setTimeout(() => showLoginForm(), 3000);
+    } catch (error) {
+        console.error('❌ خطأ في إرسال رابط إعادة التعيين:', error);
+        let errorMessage = 'حدث خطأ في إرسال رابط إعادة التعيين';
+        
+        switch(error.code) {
+            case 'auth/user-not-found':
+                errorMessage = 'لا يوجد حساب بهذا البريد الإلكتروني';
+                break;
+            case 'auth/invalid-email':
+                errorMessage = 'البريد الإلكتروني غير صالح';
+                break;
+            default:
+                errorMessage = error.message;
+        }
+        
+        showNotification(errorMessage, 'error');
+    } finally {
+        showLoading(false);
+    }
+}
+
 // ✅ دالة جديدة لإظهار جميع الأقسام
 function showAllSections() {
     const sections = ['home', 'categories', 'products', 'favorites', 'about'];
@@ -1408,6 +1539,7 @@ function renderCategories() {
             appState.currentFilter = filterId;
             renderProducts();
             document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+            addToHistory('products');
         });
         
         domElements.categoriesContainer.appendChild(categoryCard);
@@ -1516,7 +1648,7 @@ function renderProducts() {
     });
 }
 
-// ✅ دالة عرض المفضلة - المعدلة
+// ✅ دالة عرض المفضلة
 function renderFavorites() {
     console.log('عرض المنتجات المفضلة:', appState.favorites);
     domElements.favoritesContainer.innerHTML = '';
@@ -1897,6 +2029,10 @@ function switchAuthTab(tabId) {
             form.classList.remove('active');
         }
     });
+    
+    // إخفاء نموذج إعادة التعيين إذا كان ظاهراً
+    const resetForm = document.getElementById('resetPasswordForm');
+    if (resetForm) resetForm.style.display = 'none';
 }
 
 function checkAuthState() {
@@ -2146,12 +2282,13 @@ function setupMobileNavigation() {
                 const targetId = href.substring(1);
                 const targetElement = document.getElementById(targetId);
                 if (targetElement) {
-                    showAllSections();
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-                
-                if (targetId === 'favorites') {
-                    showFavoritesPage();
+                    if (targetId === 'favorites') {
+                        showFavoritesPage();
+                    } else {
+                        showAllSections();
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                        addToHistory(targetId);
+                    }
                 }
             }
         });
@@ -2855,8 +2992,8 @@ function showLoading(show) {
     else domElements.loading.classList.remove('active');
 }
 
-// ✅ دالة عرض صفحة المفضلة - المعدلة
-function showFavoritesPage() {
+// ✅ دالة عرض صفحة المفضلة - مع دعم التاريخ
+function showFavoritesPage(addToHistoryFlag = true) {
     console.log('عرض صفحة المفضلة');
     
     // إظهار جميع الأقسام أولاً
@@ -2878,7 +3015,12 @@ function showFavoritesPage() {
     // التمرير إلى قسم المفضلة
     favoritesSection.scrollIntoView({ behavior: 'smooth' });
     
-    appState.currentView = 'favorites';
+    // إضافة للتاريخ إذا طُلب ذلك
+    if (addToHistoryFlag) {
+        addToHistory('favorites');
+    } else {
+        appState.currentView = 'favorites';
+    }
 }
 
 function updateView() {
@@ -2906,4 +3048,4 @@ async function handleLogout() {
     }
 }
 
-console.log(`✅ تم تحميل الكود بنجاح مع حل مشاكل التنقل والمفضلة`);
+console.log(`✅ تم تحميل الكود بنجاح مع إضافة "نسيت كلمة السر" ودعم أزرار المتصفح`);
